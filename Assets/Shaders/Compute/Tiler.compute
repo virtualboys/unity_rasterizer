@@ -1,0 +1,81 @@
+﻿
+#pragma kernel CSMain
+
+#include "DataStructures.cginc"
+
+uint Width, Height;
+uint TilesX, TilesY;
+uint TileSize;
+
+float4x4 ViewportMat;
+
+StructuredBuffer<float4> VertsIn;
+StructuredBuffer<uint3> IndsIn;
+
+RWStructuredBuffer<PolyList> TilePolyLists;
+
+[numthreads(16, 1, 1)]
+void CSMain(uint3 id : SV_DispatchThreadID)
+{
+	uint faceInd = id.x;
+
+	// compute vertex position in viewport space
+	float3 vs[3];
+	int i;
+	for (i = 0; i < 3; i++) 
+	{
+		// indices are vertex/uv/normal
+		int vertInd = IndsIn[faceInd][i];
+
+		float4 vertHomo = VertsIn[vertInd];
+
+		vertHomo = mul(vertHomo, ViewportMat);
+		vs[i] = vertHomo.xyz / vertHomo.w;
+	}
+
+	float2 bboxmin = float2(1.#INF, 1.#INF);
+	float2 bboxmax = float2(-1.#INF, -1.#INF);
+
+	// size of screen
+	float2 clampCoords = float2(Width - 1, Height - 1);
+
+	// compute bounding box of triangle in screen space
+	for (i = 0; i < 3; i++) 
+	{
+		for (int j = 0; j < 2; j++) 
+		{
+			bboxmin[j] = max(0.f, min(bboxmin[j], vs[i][j]));
+			bboxmax[j] = min(clampCoords[j], max(bboxmax[j], vs[i][j]));
+		}
+	}
+
+	// transform bounding box to tile space
+	int2 tilebboxmin = int2(bboxmin[0] / TileSize, bboxmin[1] / TileSize);
+	int2 tilebboxmax = int2(bboxmax[0] / TileSize, bboxmax[1] / TileSize);
+
+	// loop over all tiles in bounding box
+	for (int x = tilebboxmin[0]; x <= tilebboxmax[0]; x++) 
+	{
+		for (int y = tilebboxmin[1]; y <= tilebboxmax[1]; y++) 
+		{
+			// get index of tile
+			int tileInd = y * TilesX + x;
+			int numPolys;
+			// get current number of polygons in list
+			InterlockedAdd(TilePolyLists[tileInd].Count, 1, numPolys);
+
+			if (numPolys >= NUM_POLYS_PER_TILE) 
+			{
+				// if list is full, skip tile
+				InterlockedAdd(TilePolyLists[tileInd].Count, -1);
+			}
+			else 
+			{
+				// otherwise add the poly to the list
+				// the index is the offset + numPolys + 1 as tilePolys[counterInd] holds the poly count
+				TilePolyLists[tileInd].Polys[numPolys] = faceInd;
+			}
+			
+		}
+	}
+}

@@ -1,0 +1,49 @@
+﻿// Each #kernel tells which function to compile; you can have many kernels
+#pragma kernel CSMain
+
+uint Width, Height;
+float FragOffset1;
+float FragOffset2;
+float4 ViewDir; 
+float4 LightDir; 
+StructuredBuffer<float> ZBuffer;
+RWTexture2D<float4> Screen;
+StructuredBuffer<float3> Normals;
+StructuredBuffer<float2> UVs;
+
+[numthreads(16, 1, 1)]
+void CSMain(uint3 id : SV_DispatchThreadID)
+{
+	uint i = id.x;
+
+	if (ZBuffer[i] < 100000.0f) {
+		int x = i % Width;
+		int y = i / Width;
+
+		float3 n = -Normals[i];
+		//n.x *= FragOffset1;
+		//normalize(n);
+		float2 uv = UVs[i];
+
+		float4 col = float4(uv.x, uv.y, 1, 1);
+		//col.xyz = normalize(n);
+
+		float val = dot(n, ViewDir.xyz);
+
+		col.r *= 1 - val;
+		col.g *= 1 - n.y;
+		col.b = sin(val);
+		//col.b = sin(val);
+		//col.a = 1;
+
+		//col.r *= Offset;
+		//col.g *= 1.0f - Offset;
+
+	/*	col.r = col.r % 1.0f;
+		col.g = col.g % 1.0f;
+		col.b = col.b % 1.0f;*/
+
+
+		Screen[uint2(x, y)] = col;
+	}
+}

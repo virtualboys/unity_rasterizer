@@ -1,0 +1,30 @@
+﻿// Each #kernel tells which function to compile; you can have many kernels
+#pragma kernel CSMain
+
+float4x4 MVPMat;
+float4x4 ModelMat;
+
+StructuredBuffer<float3> VertsIn;
+StructuredBuffer<float3> NormalsIn;
+
+RWStructuredBuffer<float4> VertsOut;
+RWStructuredBuffer<float3> NormalsOut;
+
+float VertOffset;
+
+[numthreads(16,1,1)]
+void CSMain(uint3 id : SV_DispatchThreadID)
+{
+	float4 vert = float4(VertsIn[id.x], 1.0f);
+	float4 normal = float4(NormalsIn[id.x], 1.0f);
+
+	float3 n = mul(ModelMat, normal).xyz;
+	n = normalize(n);
+
+	vert = mul(MVPMat, vert);
+
+	vert.xy += float2(cos(100 * vert.x), sin(100 * vert.y)) * VertOffset;
+
+	VertsOut[id.x] = vert;
+	NormalsOut[id.x] = n;
+}

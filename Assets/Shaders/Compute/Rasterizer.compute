@@ -1,0 +1,140 @@
+﻿
+#pragma kernel CSMain
+
+#include "DataStructures.cginc"
+
+float3 barycentric(float2 A, float2 B, float2 C, float2 P, float offset) {
+	float3 s[2];
+	//A *= offset;
+
+	for (int i = 2; i--; ) {
+		s[i][0] = C[i] - (A[i]);
+		s[i][1] = B[i] - (A[i]);
+		s[i][2] = A[i] - P[i];
+	}
+	float3 u = cross(s[0], s[1]);
+	if (abs(u[2]) > 1e-2) // 
+		//dont forget that u[2] is integer. If it is zero then triangle ABC is degenerate
+		return float3(1.0f - (u.x + u.y) / u.z, u.y / u.z, u.x / u.z);
+	return float3(-1, 1, 1); // in this case generate negative coordinates, it will be thrown away by the rasterizator
+}
+
+float3 interpolateBary3(float3 a, float3 b, float3 c, float3 bar) {
+	return float3(a.x * bar.x + b.x * bar.y + c.x * bar.z,
+		a.y * bar.x + b.y * bar.y + c.y * bar.z,
+		a.z * bar.x + b.z * bar.y + c.z * bar.z);
+}
+
+float2 interpolateBary2(float2 a, float2 b, float2 c, float3 bar) {
+	return float2(a.x * bar.x + b.x * bar.y + c.x * bar.z,
+		a.y * bar.x + b.y * bar.y + c.y * bar.z);
+}
+
+uint Width, Height;
+uint TilesX, TilesY;
+uint TileSize;
+
+float RastOffset;
+
+float4x4 ViewportMat;
+
+StructuredBuffer<float4> VertsIn;
+StructuredBuffer<float3> NormalsIn;
+StructuredBuffer<float2> UVsIn;
+StructuredBuffer<uint3> IndsIn;
+StructuredBuffer<PolyList> TilePolyLists;
+
+RWStructuredBuffer<float> ZBuffer;
+RWTexture2D<float4> Screen;
+RWStructuredBuffer<float3> NormalsOut;
+RWStructuredBuffer<float2> UVsOut;
+
+[numthreads(16, 1, 1)]
+void CSMain(uint3 id : SV_DispatchThreadID)
+{
+	uint tileInd = id.x;
+
+	float2 tileMin = float2(TileSize * (tileInd % TilesX), TileSize * (tileInd / TilesX));
+	float2 tileMax = float2(tileMin.x + TileSize, tileMin.y + TileSize);
+
+	int numPolys = TilePolyLists[tileInd].Count;
+
+	numPolys = min(numPolys, NUM_POLYS_PER_TILE);
+
+
+	for (int ind = 0; ind < numPolys; ind++) {
+
+		int faceInd = TilePolyLists[tileInd].Polys[ind];
+
+		float3 homoZs;
+		float4 vsVP[3];
+		float3 vs[3];
+		float3 ns[3];
+		float2 uvs[3];
+		int i;
+		for (i = 0; i < 3; i++) {
+			int vertInd = IndsIn[faceInd][i];
+			float4 vertHomo = VertsIn[vertInd];
+
+			homoZs[i] = vertHomo.z;
+			vertHomo = mul(vertHomo, ViewportMat);
+
+			vsVP[i] = vertHomo;
+			vs[i] = vertHomo.xyz / vertHomo.w;
+
+			ns[i] = NormalsIn[vertInd];
+			uvs[i] = UVsIn[vertInd];
+		}
+
+		float2 bboxmin = float2(1.#INF, 1.#INF);
+		float2 bboxmax = float2(-1.#INF, -1.#INF);
+
+		for (i = 0; i < 3; i++) {
+			for (int j = 0; j < 2; j++) {
+				bboxmin[j] = max(tileMin[j], min(bboxmin[j], vs[i][j]));
+				bboxmax[j] = min(tileMax[j], max(bboxmax[j], vs[i][j]));
+			}
+		}
+
+		int2 pix;
+		for (pix.x = bboxmin.x; pix.x <= bboxmax.x; pix.x++) {
+			for (pix.y = bboxmin.y; pix.y <= bboxmax.y; pix.y++) {
+				float3 bc_screen = barycentric(vs[0].xy, vs[1].xy, vs[2].xy, float2(pix.x, pix.y), RastOffset);
+				float3 bc_clip = float3(bc_screen.x / vsVP[0][3], bc_screen.y / vsVP[1][3], bc_screen.z / vsVP[2][3]);
+
+				bc_clip = bc_clip / (bc_clip.x + bc_clip.y + bc_clip.z);
+
+				float frag_depth = dot(homoZs, bc_clip);// clipc[2]*bc_clip;
+				int pixInd = pix.x + pix.y * Width;
+
+				// THIS COULD BE ATOMIC
+				if (bc_screen.x < 0 || bc_screen.y < 0 || bc_screen.z < 0 || ZBuffer[pixInd] < frag_depth) continue;
+
+				ZBuffer[pixInd] = frag_depth;
+
+				int2 offsetPixInd = pix + int2(Width * RastOffset, Height * RastOffset);
+				int offsetInd = int((offsetPixInd.x + offsetPixInd.y * Width)) % (Width * Height);
+				ZBuffer[offsetInd] = .5f * frag_depth;
+
+				//int2 offsetPixInd = int2(pix * float2(RastOffset, RastOffset));
+				//int offsetInd = int((offsetPixInd.x + offsetPixInd.y*Width));// % (Width * Height);
+				//ZBuffer[(int)(offsetInd*RastOffset)] = 112.5f * frag_depth;
+
+				// screen[offsetPixInd] = (.5f + .5f * bc_screen.x) * 255;
+				// screen[pixInd*3+1] = (.5f + .5f * bc_screen.y) * 255;
+				// screen[pixInd*50+1] = (.5f + .5f * bc_screen.y) * 255;
+				// int otherInd = pixInd*3*(int)(fabs(offset)*10);
+				// screen[otherInd] = (.5f + .5f * bc_screen.x) * 255;
+				// screen[otherInd+1] = (.5f + .5f * bc_screen.y) * 255;
+				// screen[otherInd+2] = (.5f + .5f * bc_screen.z) * 255;
+
+				float3 n = interpolateBary3(ns[0], ns[1], ns[2], bc_clip);
+				NormalsOut[pixInd] = n;
+
+				float2 uv = interpolateBary2(uvs[0], uvs[1], uvs[2], bc_clip);
+				UVsOut[pixInd] = uv;
+
+			}
+		}
+	}
+}

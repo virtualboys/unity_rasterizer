@@ -1,0 +1,47 @@
+nodeJsSample/node_modules/
+
+#ty generated #
+# =============== #
+[Tt]emp/
+[Oo]bj/
+[Bb]uild
+BuildNoBod/
+ProfileBuild/
+ProfileBuildNoBod/
+[Ll]ibrary/
+sysinfo.txt
+blender.crash.txt
+Assets/StreamingAssets/*
+.vs
+*/*.sln
+*/*.app
+
+# ==================== #
+# Sublime Generated    #
+# ==================== #
+**/sftp-config.json
+**/sftp-config.json.meta
+
+# ===================================== #
+# Visual Studio / MonoDevelop generated #
+# ===================================== #
+[Ee]xported[Oo]bj/
+**/*.userprefs
+/*.csproj
+/*.pidb
+/*.suo
+/*.sln*
+/*.user
+/*.unityproj
+/*.booproj
+ 
+# ============ #
+# OS generated #
+# ============ #
+.DS_Store*
+._*
+.Spotlight-V100
+.Trashes
+Icon?
+ehthumbs.db
+[Tt]humbs.db
