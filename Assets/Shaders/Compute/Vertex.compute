@@ -10,7 +10,8 @@ StructuredBuffer<float3> NormalsIn;
 RWStructuredBuffer<float4> VertsOut;
 RWStructuredBuffer<float3> NormalsOut;
 
-float VertOffset;
+float VertOffset1;
+float VertOffset2;
 
 [numthreads(16,1,1)]
 void CSMain(uint3 id : SV_DispatchThreadID)
@@ -20,10 +21,10 @@ void CSMain(uint3 id : SV_DispatchThreadID)
 
 	float3 n = mul(ModelMat, normal).xyz;
 	n = normalize(n);
-
+	vert.xyz += VertOffset2 * n;
 	vert = mul(MVPMat, vert);
 
-	vert.xy += float2(cos(100 * vert.x), sin(100 * vert.y)) * VertOffset;
+	vert.xy += float2(cos(100 * vert.x), sin(100 * vert.y)) * VertOffset1;
 
 	VertsOut[id.x] = vert;
 	NormalsOut[id.x] = n;

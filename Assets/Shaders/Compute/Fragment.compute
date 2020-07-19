@@ -21,8 +21,8 @@ void CSMain(uint3 id : SV_DispatchThreadID)
 		int y = i / Width;
 
 		float3 n = -Normals[i];
-		//n.x *= FragOffset1;
-		//normalize(n);
+		n.x *= FragOffset1;
+		normalize(n);
 		float2 uv = UVs[i];
 
 		float4 col = float4(uv.x, uv.y, 1, 1);
@@ -37,7 +37,7 @@ void CSMain(uint3 id : SV_DispatchThreadID)
 		//col.a = 1;
 
 		//col.r *= Offset;
-		//col.g *= 1.0f - Offset;
+		col.g *= FragOffset2;
 
 	/*	col.r = col.r % 1.0f;
 		col.g = col.g % 1.0f;

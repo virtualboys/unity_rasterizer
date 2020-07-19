@@ -20,10 +20,10 @@ public class AnalogInputManager : MonoBehaviour
     private const int SELECT_JACK = 5;
 
     [SerializeField] private ShaderOffsetMap _clearOffset;
+    [SerializeField] private ShaderOffsetMap _selectOffset;
     [SerializeField] private ShaderOffsetMap[] _vertexOffsets;
     [SerializeField] private ShaderOffsetMap[] _rasterizerOffsets;
-    [SerializeField] private ShaderOffsetMap[] _fragmentOffsets1;
-    [SerializeField] private ShaderOffsetMap[] _fragmentOffsets2;
+    [SerializeField] private ShaderOffsetMap[] _fragmentOffsets;
 
     private int[] _jackVals;
     private float[] _transformedVals;
@@ -39,9 +39,9 @@ public class AnalogInputManager : MonoBehaviour
         _jackVals[jackInd] = val;
     }
 
-    private float TransformVal(int val, ShaderOffsetMap map)
+    private float TransformVal(int val, ShaderOffsetMap map, float scale)
     {
-        float f = map.Amplitude * (val / 1024.0f);
+        float f = map.Amplitude * scale * (val / 1024.0f);
         if(map.Center == ShaderOffsetMap.CenterMode.One)
         {
             f += 1.0f;
@@ -58,35 +58,36 @@ public class AnalogInputManager : MonoBehaviour
         return f;
     }
 
+    private void SetScaledOffsets(int jackNum, ComputeShader shader, ShaderOffsetMap[] offsetMaps)
+    {
+        float select = TransformVal(_jackVals[SELECT_JACK], _selectOffset, 1);
+        float val1 = TransformVal(_jackVals[jackNum], offsetMaps[0], select);
+        float val2 = TransformVal(_jackVals[jackNum], offsetMaps[1], 1.0f - select);
+        _transformedVals[jackNum] = val1;
+        shader.SetFloat(offsetMaps[0].PropName, val1);
+        shader.SetFloat(offsetMaps[1].PropName, val2);
+    }
+
     public void SetClearOffset(ComputeShader shader)
     {
-        float val = TransformVal(_jackVals[CLEAR_JACK], _clearOffset);
+        float val = TransformVal(_jackVals[CLEAR_JACK], _clearOffset, 1);
         _transformedVals[CLEAR_JACK] = val;
         shader.SetFloat(_clearOffset.PropName, val);
     }
 
     public void SetVertexOffsets(ComputeShader shader)
     {
-        float val = TransformVal(_jackVals[VERT_JACK], _vertexOffsets[0]);
-        _transformedVals[VERT_JACK] = val;
-        shader.SetFloat(_vertexOffsets[0].PropName, val);
+        SetScaledOffsets(VERT_JACK, shader, _vertexOffsets);
     }
 
     public void SetRasterizerOffsets(ComputeShader shader)
     {
-        float val = TransformVal(_jackVals[RAST_JACK], _rasterizerOffsets[0]);
-        _transformedVals[RAST_JACK] = val;
-        shader.SetFloat(_rasterizerOffsets[0].PropName, val);
+        SetScaledOffsets(RAST_JACK, shader, _rasterizerOffsets);
     }
 
     public void SetFragmentOffsets(ComputeShader shader)
     {
-        float val1 = TransformVal(_jackVals[FRAG1_JACK], _fragmentOffsets1[0]);
-        float val2 = TransformVal(_jackVals[FRAG2_JACK], _fragmentOffsets2[0]);
-        _transformedVals[FRAG1_JACK] = val1;
-        _transformedVals[FRAG2_JACK] = val2;
-        shader.SetFloat(_fragmentOffsets1[0].PropName, val1);
-        shader.SetFloat(_fragmentOffsets2[0].PropName, val2);
+        SetScaledOffsets(FRAG1_JACK, shader, _fragmentOffsets);
     }
 }
 

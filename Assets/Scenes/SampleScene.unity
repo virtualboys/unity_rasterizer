@@ -339,7 +339,7 @@ PrefabInstance:
     - target: {fileID: -4216859302048453862, guid: 0e59828d634a0ff43a10c92c53cfdd0d,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.83
+      value: -0.21
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 0e59828d634a0ff43a10c92c53cfdd0d,
         type: 3}
@@ -460,13 +460,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _clearOffset: {fileID: 11400000, guid: fdd0efce67a5682459036742e99c64f9, type: 2}
+  _selectOffset: {fileID: 11400000, guid: 4cb878f2548de6044a335fa002064fde, type: 2}
   _vertexOffsets:
   - {fileID: 11400000, guid: 2172b466acc631e48ae929ac98d9bf57, type: 2}
+  - {fileID: 11400000, guid: 44131ca7e88e2234f83776ae0b365b1d, type: 2}
   _rasterizerOffsets:
   - {fileID: 11400000, guid: f8cd2eb63e0612a46925056356a990f1, type: 2}
-  _fragmentOffsets1:
+  - {fileID: 11400000, guid: 3a921ff3a35505b43b95db86edf65b9c, type: 2}
+  _fragmentOffsets:
   - {fileID: 11400000, guid: 0d22cfc666a7018419c89f634214a953, type: 2}
-  _fragmentOffsets2:
   - {fileID: 11400000, guid: 643dc3edf624a424baad1304aa04ab96, type: 2}
 --- !u!4 &571525656
 Transform:

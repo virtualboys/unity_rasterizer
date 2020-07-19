@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 313b92810ede0204ca7224dd9c6f5197, type: 3}
-  m_Name: VertOffsetMap
+  m_Name: Rast2OffsetMap
   m_EditorClassIdentifier: 
-  PropName: VertOffset
+  PropName: RastOffset2
   Center: 0
-  Amplitude: 0.09
+  Amplitude: 1
