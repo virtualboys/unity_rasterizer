@@ -11,7 +11,7 @@ RWTexture2D<float4> Screen;
 StructuredBuffer<float3> Normals;
 StructuredBuffer<float2> UVs;
 
-[numthreads(16, 1, 1)]
+[numthreads(32, 1, 1)]
 void CSMain(uint3 id : SV_DispatchThreadID)
 {
 	uint i = id.x;

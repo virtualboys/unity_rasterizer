@@ -5,7 +5,7 @@
 
 float3 barycentric(float2 A, float2 B, float2 C, float2 P, float offset) {
 	float3 s[2];
-	A *= offset;
+	A *= offset + 1;
 
 	for (int i = 2; i--; ) {
 		s[i][0] = C[i] - (A[i]);
@@ -50,7 +50,7 @@ RWTexture2D<float4> Screen;
 RWStructuredBuffer<float3> NormalsOut;
 RWStructuredBuffer<float2> UVsOut;
 
-[numthreads(16, 1, 1)]
+[numthreads(32, 1, 1)]
 void CSMain(uint3 id : SV_DispatchThreadID)
 {
 	uint tileInd = id.x;

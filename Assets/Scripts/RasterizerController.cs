@@ -8,10 +8,10 @@ public class RasterizerController : MonoBehaviour
 
     private const int NUM_POLYS_PER_TILE = 20;
     private const int TILE_SIZE = 4;
-    private const int NUM_THREADS_PER_GROUP = 16;
+    private const int NUM_THREADS_PER_GROUP = 32;
 
-    private const int WIDTH = 1120;
-    private const int HEIGHT = 840;
+    private const int WIDTH = 1600;
+    private const int HEIGHT = 1200;
 
     private unsafe struct PolyList
     {
@@ -27,6 +27,7 @@ public class RasterizerController : MonoBehaviour
     [SerializeField] private ComputeShader _tilerShader;
     [SerializeField] private ComputeShader _rasterizerShader;
     [SerializeField] private ComputeShader _fragmentShader;
+    [SerializeField] private ComputeShader _postProcessShader;
 
     public Texture ScreenTex { get { return _screen; } }
     public int Width { get { return WIDTH; } }
@@ -42,6 +43,7 @@ public class RasterizerController : MonoBehaviour
     private int _tilerKernel;
     private int _rasterizerKernel;
     private int _fragmentKernel;
+    private int _postProcessKernel;
 
     private RenderTexture _screen;
     private ComputeBuffer _zBuffer;
@@ -75,6 +77,7 @@ public class RasterizerController : MonoBehaviour
         _tilerKernel = _tilerShader.FindKernel(KERNEL_NAME);
         _rasterizerKernel = _rasterizerShader.FindKernel(KERNEL_NAME);
         _fragmentKernel = _fragmentShader.FindKernel(KERNEL_NAME);
+        _postProcessKernel = _postProcessShader.FindKernel(KERNEL_NAME);
 
         _screen = new RenderTexture(WIDTH, HEIGHT, 0, RenderTextureFormat.ARGBFloat);
         _screen.enableRandomWrite = true;
@@ -188,5 +191,14 @@ public class RasterizerController : MonoBehaviour
         _inputManager.SetFragmentOffsets(_fragmentShader);
 
         _fragmentShader.Dispatch(_fragmentKernel, _numPixels / NUM_THREADS_PER_GROUP, 1, 1);
+
+        _postProcessShader.SetInt("Width", WIDTH);
+        _postProcessShader.SetInt("Height", HEIGHT);
+
+        _postProcessShader.SetTexture(_postProcessKernel, "Screen", _screen);
+
+        _inputManager.SetPostProcessOffsets(_postProcessShader);
+
+        _postProcessShader.Dispatch(_postProcessKernel, _numPixels / NUM_THREADS_PER_GROUP, 1, 1);
     }
 }

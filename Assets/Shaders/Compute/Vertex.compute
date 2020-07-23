@@ -13,7 +13,7 @@ RWStructuredBuffer<float3> NormalsOut;
 float VertOffset1;
 float VertOffset2;
 
-[numthreads(16,1,1)]
+[numthreads(32,1,1)]
 void CSMain(uint3 id : SV_DispatchThreadID)
 {
 	float4 vert = float4(VertsIn[id.x], 1.0f);

@@ -22,7 +22,7 @@ public class OSCReceiver : MonoBehaviour
     {
         for(int i = 0; i < 6; i++)
         {
-            _inputManager.SetJackVal(i, msg.GetInt(i));
+            _inputManager.SetJackVal(i, msg.GetFloat(i));
         }
     }
 }
