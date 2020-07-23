@@ -471,6 +471,10 @@ MonoBehaviour:
   _fragmentOffsets:
   - {fileID: 11400000, guid: 0d22cfc666a7018419c89f634214a953, type: 2}
   - {fileID: 11400000, guid: 643dc3edf624a424baad1304aa04ab96, type: 2}
+  _postProcessOffsets:
+  - {fileID: 11400000, guid: 90427772fa4442c4283ed85fbfe256b9, type: 2}
+  - {fileID: 11400000, guid: cbcca876ca3fc7541b4dab731f5e19a5, type: 2}
+  - {fileID: 11400000, guid: fe6c61021e79bc3479899c31f532bdc6, type: 2}
 --- !u!4 &571525656
 Transform:
   m_ObjectHideFlags: 0
