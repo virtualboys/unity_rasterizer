@@ -22,6 +22,8 @@ public class RasterizerController : MonoBehaviour
     [SerializeField] private Light _light;
     [SerializeField] private AnalogInputManager _inputManager;
 
+    [SerializeField] private bool _postProcessingEnabled;
+
     [SerializeField] private ComputeShader _clearShader;
     [SerializeField] private ComputeShader _vertexShader;
     [SerializeField] private ComputeShader _tilerShader;
@@ -192,13 +194,16 @@ public class RasterizerController : MonoBehaviour
 
         _fragmentShader.Dispatch(_fragmentKernel, _numPixels / NUM_THREADS_PER_GROUP, 1, 1);
 
-        _postProcessShader.SetInt("Width", WIDTH);
-        _postProcessShader.SetInt("Height", HEIGHT);
+        if(_postProcessingEnabled)
+        {
+            _postProcessShader.SetInt("Width", WIDTH);
+            _postProcessShader.SetInt("Height", HEIGHT);
 
-        _postProcessShader.SetTexture(_postProcessKernel, "Screen", _screen);
+            _postProcessShader.SetTexture(_postProcessKernel, "Screen", _screen);
 
-        _inputManager.SetPostProcessOffsets(_postProcessShader);
+            _inputManager.SetPostProcessOffsets(_postProcessShader);
 
-        _postProcessShader.Dispatch(_postProcessKernel, _numPixels / NUM_THREADS_PER_GROUP, 1, 1);
+            _postProcessShader.Dispatch(_postProcessKernel, _numPixels / NUM_THREADS_PER_GROUP, 1, 1);
+        }
     }
 }

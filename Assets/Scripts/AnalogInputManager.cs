@@ -32,6 +32,13 @@ public class AnalogInputManager : MonoBehaviour
     private void Start()
     {
         _jackVals = new float[6];
+        _transformedVals = new float[6][];
+        _transformedVals[VERT_JACK] = new float[_vertexOffsets.Length];
+        _transformedVals[RAST_JACK] = new float[_rasterizerOffsets.Length];
+        _transformedVals[FRAG_JACK] = new float[_fragmentOffsets.Length];
+        _transformedVals[POST_JACK] = new float[_postProcessOffsets.Length];
+        _transformedVals[CLEAR_JACK] = new float[1];
+        _transformedVals[SELECT_JACK] = new float[1];
     }
 
     public void SetJackVal(int jackInd, float val)
@@ -76,7 +83,9 @@ public class AnalogInputManager : MonoBehaviour
             }
 
             float val = TransformVal(_jackVals[jackNum], offsetMaps[i], t);
-            shader.SetFloat(offsetMaps[i].PropName, t);
+            shader.SetFloat(offsetMaps[i].PropName, val);
+
+            _transformedVals[jackNum][i] = val;
         }
     }
 

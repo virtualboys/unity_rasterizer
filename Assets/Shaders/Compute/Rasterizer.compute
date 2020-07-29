@@ -1,5 +1,6 @@
 ﻿
 #pragma kernel CSMain
+#pragma enable_d3d11_debug_symbols
 
 #include "DataStructures.cginc"
 
@@ -115,7 +116,7 @@ void CSMain(uint3 id : SV_DispatchThreadID)
 
 				int2 offsetPixInd = pix + int2(Width * RastOffset1, Height * RastOffset1);
 				int offsetInd = int((offsetPixInd.x + offsetPixInd.y * Width)) % (Width * Height);
-				ZBuffer[offsetInd] = .5f * frag_depth;
+				//ZBuffer[offsetInd] = .5f * frag_depth;
 
 				//int2 offsetPixInd = int2(pix * float2(RastOffset, RastOffset));
 				//int offsetInd = int((offsetPixInd.x + offsetPixInd.y*Width));// % (Width * Height);

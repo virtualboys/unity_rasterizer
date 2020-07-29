@@ -5,6 +5,7 @@ using UnityEngine;
 public class MeshManager : MonoBehaviour
 {
     private MeshFilter _meshFilter;
+    private MeshRenderer _renderer;
 
     private int[] _inds;
     private int _numFaces;
@@ -32,6 +33,7 @@ public class MeshManager : MonoBehaviour
     private void Start()
     {
         _meshFilter = GetComponentInChildren<MeshFilter>();
+        _renderer = GetComponentInChildren<MeshRenderer>();
         if(_meshFilter == null)
         {
             Debug.LogError("No mesh renderer found!");
