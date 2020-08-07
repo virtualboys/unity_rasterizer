@@ -184,6 +184,7 @@ public class RasterizerController : MonoBehaviour
 
         _fragmentShader.SetVector("ViewDir", camera.transform.forward);
         _fragmentShader.SetVector("LightDir", _light.transform.forward);
+        _fragmentShader.SetFloat("Time", Time.time);
         _fragmentShader.SetBuffer(_fragmentKernel, "ZBuffer", _zBuffer);
         _fragmentShader.SetTexture(_fragmentKernel, "Screen", _screen);
         _fragmentShader.SetBuffer(_fragmentKernel, "Normals", _normalBuffer);
