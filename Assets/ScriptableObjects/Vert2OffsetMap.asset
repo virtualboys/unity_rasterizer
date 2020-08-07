@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PropName: VertOffset2
   Center: 0
-  Amplitude: 0.09
+  Amplitude: 0.7

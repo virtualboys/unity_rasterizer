@@ -8,7 +8,7 @@ RWStructuredBuffer<float> ZBuffer;
 RWStructuredBuffer<float3> Normals;
 RWTexture2D<float4> Screen;
 float4 ClearColor;
-float ClearOffset;
+//float ClearOffset;
 
 [numthreads(32, 1, 1)]
 void CSMain(uint3 id : SV_DispatchThreadID)
@@ -19,7 +19,7 @@ void CSMain(uint3 id : SV_DispatchThreadID)
 
 	uint2 pix = uint2(x, y);
 	float4 oldColor = Screen[pix];
-	float4 newColor = oldColor * (1 - ClearOffset) + ClearColor * ClearOffset;
+	float4 newColor = oldColor * (1 - ClearColor.a) + ClearColor * ClearColor.a;
 	Screen[uint2(x, y)] = float4(newColor.rgb, 1.0f);
 	Normals[i] = float3(0, 0, 0);
 	ZBuffer[i] = 1.#INF;

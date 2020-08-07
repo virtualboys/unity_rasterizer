@@ -37,6 +37,7 @@ uint TileSize;
 
 float RastOffset1;
 float RastOffset2;
+float RastOffset3;
 
 float4x4 ViewportMat;
 
@@ -115,8 +116,8 @@ void CSMain(uint3 id : SV_DispatchThreadID)
 				ZBuffer[pixInd] = frag_depth;
 
 				int2 offsetPixInd = pix + int2(Width * RastOffset1, Height * RastOffset1);
-				int offsetInd = int((offsetPixInd.x + offsetPixInd.y * Width)) % (Width * Height);
-				//ZBuffer[offsetInd] = .5f * frag_depth;
+				int offsetInd = int((offsetPixInd.x + offsetPixInd.y * Width)*RastOffset3) % (Width * Height);
+				ZBuffer[offsetInd] = .5f * frag_depth;
 
 				//int2 offsetPixInd = int2(pix * float2(RastOffset, RastOffset));
 				//int offsetInd = int((offsetPixInd.x + offsetPixInd.y*Width));// % (Width * Height);

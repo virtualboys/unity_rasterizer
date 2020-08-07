@@ -69,11 +69,21 @@ public class RenderController : MonoBehaviour
         Rect3D farPlane = GetViewPlaneRect(_gameCamera, false);
 
         _frustumPlanes[0] = new Plane(nearPlane.Corners[0], nearPlane.Corners[1], nearPlane.Corners[2]);
-        _frustumPlanes[1] = new Plane(farPlane.Corners[0], farPlane.Corners[1], farPlane.Corners[2]);
+        _frustumPlanes[1] = new Plane(farPlane.Corners[0], farPlane.Corners[3], farPlane.Corners[2]);
         _frustumPlanes[2] = new Plane(farPlane.Corners[0], farPlane.Corners[1], nearPlane.Corners[1]);
         _frustumPlanes[3] = new Plane(nearPlane.Corners[1], farPlane.Corners[1], farPlane.Corners[2]);
         _frustumPlanes[4] = new Plane(nearPlane.Corners[3], nearPlane.Corners[2], farPlane.Corners[2]);
         _frustumPlanes[5] = new Plane(nearPlane.Corners[0], nearPlane.Corners[3], farPlane.Corners[3]);
+
+        //for(int i = 0; i < 4; i++)
+        //{
+        //    Debug.DrawLine(nearPlane.Corners[i], farPlane.Corners[i], Color.green);
+        //}
+
+        //foreach(var plane in _frustumPlanes)
+        //{
+        //    Debug.DrawLine(_gameCamera.transform.position, _gameCamera.transform.position + (plane.normal * 20), Color.cyan);
+        //}
     }
 
     Rect3D GetViewPlaneRect(Camera cam, bool nearPlane)
@@ -93,50 +103,45 @@ public class RenderController : MonoBehaviour
         return new Rect3D(r, cam.transform, a);
     }
 
-    //int BoxInFrustum()
-
- //   int FrustumG::boxInFrustum(Box &b)
- //   {
-
- //       int result = INSIDE, out,in;
-
- //       // for each plane do ...
- //       for (int i = 0; i < 6; i++)
- //       {
-
-	//	// reset counters for corners in and out
-	//	out= 0;in= 0;
- //           // for each corner of the box do ...
- //           // get out of the cycle as soon as a box as corners
- //           // both inside and out of the frustum
- //           for (int k = 0; k < 8 && (in== 0 || out== 0) ; k++) {
-
- //           // is the corner outside or inside
- //           if (pl[i].distance(b.getVertex(k)) < 0)
-	//			out++;
-	//		else
-	//			in++;
- //       }
- //       //if all corners are out
- //       if (!in)
-	//		return (OUTSIDE);
-	//	// if some corners are out and others are in
-	//	else if (out)
-	//		result = INTERSECT;
- //   }
-	//return(result);
- //}
-
-
-private void OnPreRender()
+    private bool BoxInFrustum(BoundingBox bounds)
     {
-        //_nearPlane = GetPlaneDimensions(_gameCamera, true);
-        //_farPlane = GetPlaneDimensions(_gameCamera, false);
+        foreach(var plane in _frustumPlanes)
+        {
+            int outCorners = 0;
+            int inCorners = 0;
+            for(int i = 0; i < bounds.Corners.Length && (outCorners == 0 || inCorners == 0); i++)
+            {
+                var corner = bounds.Corners[i];
+                if(plane.GetDistanceToPoint(corner) > 0)
+                {
+                    outCorners++;
+                }
+                else
+                {
+                    inCorners++;
+                }
+            }
+
+            if(inCorners == 0)
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
+    
+    private void OnPreRender()
+    {
+        ComputeFrustumPlanes();
 
         _rasterizer.BeginFrame(_gameCamera, _clearColor);
         foreach(var mesh in _meshes)
         {
-            _rasterizer.DrawModel(mesh);
+            if(BoxInFrustum(mesh.BoundingBox))
+            {
+                _rasterizer.DrawModel(mesh);
+            }
         }
         _rasterizer.EndFrame(_gameCamera);
 

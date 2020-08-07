@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Vert1OffsetMap
   m_EditorClassIdentifier: 
   PropName: VertOffset1
-  Center: 0
-  Amplitude: 0.09
+  Center: 1
+  Amplitude: 1

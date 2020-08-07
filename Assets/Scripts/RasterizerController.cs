@@ -124,8 +124,6 @@ public class RasterizerController : MonoBehaviour
         _clearShader.SetBuffer(_clearKernel, "ZBuffer", _zBuffer);
         _clearShader.SetBuffer(_clearKernel, "Normals", _normalBuffer);
 
-        _inputManager.SetClearOffset(_clearShader);
-
         _clearShader.Dispatch(_clearKernel, _numPixels / NUM_THREADS_PER_GROUP, 1, 1);
     }
 
@@ -174,6 +172,7 @@ public class RasterizerController : MonoBehaviour
         _rasterizerShader.SetBuffer(_rasterizerKernel, "UVsOut", _uvBuffer);
 
         _inputManager.SetRasterizerOffsets(_rasterizerShader);
+        _inputManager.SetRasterizerScaleOffset(_rasterizerShader);
 
         _rasterizerShader.Dispatch(_rasterizerKernel, _numTiles / NUM_THREADS_PER_GROUP, 1, 1);
     }

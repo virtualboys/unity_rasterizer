@@ -425,17 +425,17 @@ PrefabInstance:
     - target: {fileID: -4216859302048453862, guid: 0e59828d634a0ff43a10c92c53cfdd0d,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0
+      value: -4.9
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 0e59828d634a0ff43a10c92c53cfdd0d,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.21
+      value: -1.9
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 0e59828d634a0ff43a10c92c53cfdd0d,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -4.13
+      value: -29.84
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 0e59828d634a0ff43a10c92c53cfdd0d,
         type: 3}
@@ -480,17 +480,17 @@ PrefabInstance:
     - target: {fileID: -4216859302048453862, guid: 0e59828d634a0ff43a10c92c53cfdd0d,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 1.8211
+      value: 10.041182
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 0e59828d634a0ff43a10c92c53cfdd0d,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 1.8211
+      value: 10.041182
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 0e59828d634a0ff43a10c92c53cfdd0d,
         type: 3}
       propertyPath: m_LocalScale.z
-      value: 1.8211
+      value: 10.041182
       objectReference: {fileID: 0}
     - target: {fileID: -2416733968201007103, guid: 0e59828d634a0ff43a10c92c53cfdd0d,
         type: 3}
@@ -501,6 +501,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: hand
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 0e59828d634a0ff43a10c92c53cfdd0d,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0e59828d634a0ff43a10c92c53cfdd0d, type: 3}
@@ -565,7 +570,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67c0182f562441a4f830bb4aed5b23a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _clearOffset: {fileID: 11400000, guid: fdd0efce67a5682459036742e99c64f9, type: 2}
+  _rastScaleOffset: {fileID: 11400000, guid: fdd0efce67a5682459036742e99c64f9, type: 2}
   _selectOffset: {fileID: 11400000, guid: 4cb878f2548de6044a335fa002064fde, type: 2}
   _vertexOffsets:
   - {fileID: 11400000, guid: 2172b466acc631e48ae929ac98d9bf57, type: 2}
@@ -741,7 +746,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 800431631}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -6.96}
+  m_LocalPosition: {x: 0, y: 0, z: -48.15}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -853,12 +858,12 @@ PrefabInstance:
     - target: {fileID: -4216859302048453862, guid: 38d734f0492515f4596a7981223a6036,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -3.01
+      value: -9.63
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 38d734f0492515f4596a7981223a6036,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -4.84
+      value: -38.34
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 38d734f0492515f4596a7981223a6036,
         type: 3}
@@ -903,27 +908,27 @@ PrefabInstance:
     - target: {fileID: -4216859302048453862, guid: 38d734f0492515f4596a7981223a6036,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.013322711
+      value: 0.04840749
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 38d734f0492515f4596a7981223a6036,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.013322711
+      value: 0.04840749
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 38d734f0492515f4596a7981223a6036,
         type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.013322711
+      value: 0.04840749
       objectReference: {fileID: 0}
     - target: {fileID: -927199367670048503, guid: 38d734f0492515f4596a7981223a6036,
         type: 3}
       propertyPath: m_Name
-      value: cloud
+      value: cloud (Busted bc of submesh and also no normals??)
       objectReference: {fileID: 0}
     - target: {fileID: -927199367670048503, guid: 38d734f0492515f4596a7981223a6036,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 38d734f0492515f4596a7981223a6036, type: 3}
@@ -1087,7 +1092,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1546748497
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1102,22 +1107,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _inputManager: {fileID: 571525655}
   _jackOscillationPeriods:
-  - Oscillate: 1
+  - Oscillate: 0
     Value: 0
     Period: 6
-  - Oscillate: 1
+  - Oscillate: 0
     Value: 0
     Period: 10
-  - Oscillate: 1
+  - Oscillate: 0
     Value: 0
     Period: 20
-  - Oscillate: 1
+  - Oscillate: 0
     Value: 0
     Period: 15
-  - Oscillate: 1
+  - Oscillate: 0
     Value: 0
     Period: 30
-  - Oscillate: 1
+  - Oscillate: 0
     Value: 0
     Period: 5
 --- !u!4 &1546748498

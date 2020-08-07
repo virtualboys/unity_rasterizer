@@ -13,6 +13,9 @@ public class MeshManager : MonoBehaviour
     private Vector3[] _normals;
     private Vector2[] _uvs;
 
+    public BoundingBox BoundingBox { get { return _boundingBox; } }
+    private BoundingBox _boundingBox;
+
     public int NumVerts { get { return _vertices.Length; } }
     public int NumFaces { get { return _numFaces; } }
     public Matrix4x4 ModelMatrix { get { return _meshFilter.transform.localToWorldMatrix; } }
@@ -40,8 +43,15 @@ public class MeshManager : MonoBehaviour
             return;
         }
 
+        _boundingBox = new BoundingBox();
+
         InitCPUBuffers();
         InitGPUBuffers();
+    }
+
+    public Bounds GetWorldBounds()
+    {
+        return _renderer.bounds;
     }
 
     private void InitCPUBuffers()
@@ -88,6 +98,11 @@ public class MeshManager : MonoBehaviour
 
     private void LateUpdate()
     {
+        _boundingBox.UpdateCorners(_renderer.bounds);
+        //for(int i = 0; i < 8; i++)
+        //{
+        //    Debug.DrawLine(_boundingBox.Corners[i], _boundingBox.Corners[(i + 1) % 8], Color.red);
+        //}
         RenderController.Instance.MarkForRender(this);
     }
 }

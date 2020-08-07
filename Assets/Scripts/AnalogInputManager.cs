@@ -16,10 +16,10 @@ public class AnalogInputManager : MonoBehaviour
     private const int RAST_JACK = 1;
     private const int FRAG_JACK = 2;
     private const int POST_JACK = 3;
-    private const int CLEAR_JACK = 4;
+    private const int RAST_SCALE_JACK = 4;
     private const int SELECT_JACK = 5;
 
-    [SerializeField] private ShaderOffsetMap _clearOffset;
+    [SerializeField] private ShaderOffsetMap _rastScaleOffset;
     [SerializeField] private ShaderOffsetMap _selectOffset;
     [SerializeField] private ShaderOffsetMap[] _vertexOffsets;
     [SerializeField] private ShaderOffsetMap[] _rasterizerOffsets;
@@ -37,7 +37,7 @@ public class AnalogInputManager : MonoBehaviour
         _transformedVals[RAST_JACK] = new float[_rasterizerOffsets.Length];
         _transformedVals[FRAG_JACK] = new float[_fragmentOffsets.Length];
         _transformedVals[POST_JACK] = new float[_postProcessOffsets.Length];
-        _transformedVals[CLEAR_JACK] = new float[1];
+        _transformedVals[RAST_SCALE_JACK] = new float[1];
         _transformedVals[SELECT_JACK] = new float[1];
     }
 
@@ -89,10 +89,10 @@ public class AnalogInputManager : MonoBehaviour
         }
     }
 
-    public void SetClearOffset(ComputeShader shader)
+    public void SetRasterizerScaleOffset(ComputeShader shader)
     {
-        float val = TransformVal(_jackVals[CLEAR_JACK], _clearOffset, 1);
-        shader.SetFloat(_clearOffset.PropName, val);
+        float val = TransformVal(_jackVals[RAST_SCALE_JACK], _rastScaleOffset, 1);
+        shader.SetFloat(_rastScaleOffset.PropName, val);
     }
 
     public void SetVertexOffsets(ComputeShader shader)

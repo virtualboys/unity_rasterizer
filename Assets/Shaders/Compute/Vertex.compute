@@ -24,7 +24,10 @@ void CSMain(uint3 id : SV_DispatchThreadID)
 	vert.xyz += VertOffset2 * n;
 	vert = mul(MVPMat, vert);
 
-	vert.xy += float2(cos(100 * vert.x), sin(100 * vert.y)) * VertOffset1;
+	float3 roundedVert = (int3)vert.xyz;
+	VertOffset1 = clamp(VertOffset1, 0, 1);
+	vert.xyz = (vert.xyz * (1 - VertOffset1)) + (roundedVert * VertOffset1);
+	//vert.xyz = roundedVert;
 
 	VertsOut[id.x] = vert;
 	NormalsOut[id.x] = n;
