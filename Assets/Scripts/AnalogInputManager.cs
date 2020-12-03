@@ -1,5 +1,22 @@
 ﻿
+using System;
 using UnityEngine;
+using static ShaderOffsetMap;
+
+[Serializable]
+public class InputDescription
+{
+    public string Name;
+    public string CurrentParameter;
+    public CenterMode CenterMode;
+
+    public InputDescription(string name, string parameter, CenterMode centerMode)
+    {
+        Name = name;
+        CurrentParameter = parameter;
+        CenterMode = centerMode;
+    }
+}
 
 public class AnalogInputManager : MonoBehaviour
 {
@@ -19,12 +36,12 @@ public class AnalogInputManager : MonoBehaviour
     private const int RAST_SCALE_JACK = 4;
     private const int SELECT_JACK = 5;
 
-    [SerializeField] private ShaderOffsetMap _rastScaleOffset;
-    [SerializeField] private ShaderOffsetMap _selectOffset;
     [SerializeField] private ShaderOffsetMap[] _vertexOffsets;
     [SerializeField] private ShaderOffsetMap[] _rasterizerOffsets;
     [SerializeField] private ShaderOffsetMap[] _fragmentOffsets;
     [SerializeField] private ShaderOffsetMap[] _postProcessOffsets;
+    [SerializeField] private ShaderOffsetMap _rastScaleOffset;
+    [SerializeField] private ShaderOffsetMap _selectOffset;
 
     private float[] _jackVals;
     private float[][] _transformedVals;
@@ -44,6 +61,47 @@ public class AnalogInputManager : MonoBehaviour
     public void SetJackVal(int jackInd, float val)
     {
         _jackVals[jackInd] = val;
+    }
+
+    public InputDescription GetCurrentDescription(int jackInd)
+    {
+        ShaderOffsetMap[] maps;
+        string name;
+        switch (jackInd)
+        {
+            case VERT_JACK:
+                name = "Vertex";
+                maps = _vertexOffsets;
+                break;
+            case RAST_JACK:
+                name = "Rasterizer";
+                maps = _rasterizerOffsets;
+                break;
+            case FRAG_JACK:
+                name = "Fragment";
+                maps = _fragmentOffsets;
+                break;
+            case POST_JACK:
+                name = "Post Processing";
+                maps = _postProcessOffsets;
+                break;
+            case RAST_SCALE_JACK:
+                name = "Rasterizer Scale";
+                maps = new ShaderOffsetMap[] { _rastScaleOffset };
+                break;
+            case SELECT_JACK:
+                name = "Select";
+                maps = new ShaderOffsetMap[] { _selectOffset };
+                break;
+            default:
+                name = "null";
+                maps = null;
+                break;
+        }
+
+        int offsetInd = (int)(GetSelectVal() * (maps.Length - 1) + (.5f / maps.Length));
+        Debug.Log("Select val: " + GetSelectVal() + " offsetInd: " + offsetInd + " maps len: " + maps.Length + " jack ind: " + jackInd);
+        return new InputDescription(name, maps[offsetInd].Description, maps[offsetInd].Center);
     }
 
     private float TransformVal(float val, ShaderOffsetMap map, float scale)
@@ -67,7 +125,7 @@ public class AnalogInputManager : MonoBehaviour
 
     private void SetScaledOffsets(int jackNum, ComputeShader shader, ShaderOffsetMap[] offsetMaps)
     {
-        float select = TransformVal(_jackVals[SELECT_JACK], _selectOffset, 1);
+        float select = GetSelectVal();
         float tRange = 1.0f / (offsetMaps.Length - 1);
         int ind1 = (int)(select / tRange);
         for(int i = 0; i < offsetMaps.Length; i++)
@@ -87,6 +145,12 @@ public class AnalogInputManager : MonoBehaviour
 
             _transformedVals[jackNum][i] = val;
         }
+    }
+
+    private float GetSelectVal()
+    {
+        float selectVal = TransformVal(_jackVals[SELECT_JACK], _selectOffset, 1);
+        return Mathf.Clamp(selectVal, 0, 1);
     }
 
     public void SetRasterizerScaleOffset(ComputeShader shader)

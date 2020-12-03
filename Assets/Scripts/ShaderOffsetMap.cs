@@ -11,6 +11,7 @@ public class ShaderOffsetMap : ScriptableObject
         One
     }
 
+    public string Description;
     public string PropName;
     public CenterMode Center;
     public float Amplitude;

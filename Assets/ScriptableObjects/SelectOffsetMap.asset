@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 313b92810ede0204ca7224dd9c6f5197, type: 3}
   m_Name: SelectOffsetMap
   m_EditorClassIdentifier: 
+  Description: Select
   PropName: ClearOffset
   Center: 1
   Amplitude: 1

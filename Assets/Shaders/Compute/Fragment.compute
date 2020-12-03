@@ -40,7 +40,11 @@ void CSMain(uint3 id : SV_DispatchThreadID)
 		//col.a = 1;
 
 		//col.r *= Offset;
-		col.g *= FragOffset2;
+		//col.g *= 1 + (sin((FragOffset2 * (float)x)) + cos((FragOffset2 * (float)y)));
+
+		// either of these look good but not together
+		//col.b += tan(FragOffset2 * (100*n.y));
+		col.g += sin(FragOffset2 * (100*n.y));
 
 	/*	col.r = col.r % 1.0f;
 		col.g = col.g % 1.0f;

@@ -1,10 +1,13 @@
 ﻿
 using System;
 using UnityEngine;
+using static ShaderOffsetMap;
 
 [Serializable]
 public class OffsetAnimation
 {
+    public InputDescription InputDescription;
+
     public bool Oscillate;
     [Range(-8000, 8000)]
     public float Value;
@@ -36,6 +39,7 @@ public class OffsetAnimator : MonoBehaviour
             var o = _jackOscillationPeriods[i];
             o.Update();
             _inputManager.SetJackVal(i, o.Value);
+            o.InputDescription = _inputManager.GetCurrentDescription(i);
         }
     }
 }
