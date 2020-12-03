@@ -46,7 +46,7 @@ void CSMain(uint3 id : SV_DispatchThreadID)
 		col.g = col.g % 1.0f;
 		col.b = col.b % 1.0f;*/
 		float3 pix = .3f * float3(x / 20.0f, y / 20.0f, ZBuffer[i]);
-		col = float4(1, 1, 1, 1) * snoise(float4(pix, Time));
+		//col = float4(1, 1, 1, 1) * snoise(float4(pix, Time));
 
 
 		Screen[uint2(x, y)] = col;

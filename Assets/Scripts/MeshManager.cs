@@ -2,10 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MeshManager : MonoBehaviour
+public abstract class MeshManager : MonoBehaviour
 {
-    private MeshFilter _meshFilter;
-    private MeshRenderer _renderer;
+    private Renderer _renderer;
 
     private int[] _inds;
     private int _numFaces;
@@ -18,7 +17,8 @@ public class MeshManager : MonoBehaviour
 
     public int NumVerts { get { return _vertices.Length; } }
     public int NumFaces { get { return _numFaces; } }
-    public Matrix4x4 ModelMatrix { get { return _meshFilter.transform.localToWorldMatrix; } }
+
+    public virtual Matrix4x4 ModelMatrix { get { return _renderer.transform.localToWorldMatrix; } }
 
     public ComputeBuffer IndexBuffer { get { return _indexBuffer; } }
     private ComputeBuffer _indexBuffer;
@@ -33,19 +33,14 @@ public class MeshManager : MonoBehaviour
     public ComputeBuffer NormalOutBuffer { get { return _normalOutBuffer; } }
     private ComputeBuffer _normalOutBuffer;
 
-    private void Start()
-    {
-        _meshFilter = GetComponentInChildren<MeshFilter>();
-        _renderer = GetComponentInChildren<MeshRenderer>();
-        if(_meshFilter == null)
-        {
-            Debug.LogError("No mesh renderer found!");
-            return;
-        }
+    protected virtual void OnRender() { }
 
+    protected void InitBuffers(Mesh mesh, Renderer renderer)
+    {
+        _renderer = renderer;
         _boundingBox = new BoundingBox();
 
-        InitCPUBuffers();
+        InitCPUBuffers(mesh);
         InitGPUBuffers();
     }
 
@@ -54,9 +49,8 @@ public class MeshManager : MonoBehaviour
         return _renderer.bounds;
     }
 
-    private void InitCPUBuffers()
+    private void InitCPUBuffers(Mesh mesh)
     {
-        var mesh = _meshFilter.sharedMesh;
         _inds = mesh.triangles;
         _vertices = mesh.vertices;
         _normals = mesh.normals;
@@ -86,6 +80,15 @@ public class MeshManager : MonoBehaviour
         _normalOutBuffer = new ComputeBuffer(_normals.Length, sizeof(float) * 3);
     }
 
+    protected void UpdateBuffers(Mesh mesh)
+    {
+        _vertices = mesh.vertices;
+        _vertexInBuffer.SetData(_vertices);
+
+        _normals = mesh.normals;
+        _normalInBuffer.SetData(_normals);
+    }
+
     private void OnDestroy()
     {
         _indexBuffer.Dispose();
@@ -98,6 +101,8 @@ public class MeshManager : MonoBehaviour
 
     private void LateUpdate()
     {
+        OnRender();
+
         _boundingBox.UpdateCorners(_renderer.bounds);
         //for(int i = 0; i < 8; i++)
         //{
