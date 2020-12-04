@@ -35,6 +35,8 @@ public class AnalogInputManager : MonoBehaviour
     private const int POST_JACK = 3;
     private const int CAMERA_JACK = 4;
     private const int SELECT_JACK = 5;
+    
+    [SerializeField] private Camera _gameCam;
 
     [SerializeField] private ShaderOffsetMap[] _vertexOffsets;
     [SerializeField] private ShaderOffsetMap[] _rasterizerOffsets;
@@ -46,6 +48,8 @@ public class AnalogInputManager : MonoBehaviour
     private float[] _jackVals;
     private float[][] _transformedVals;
 
+    private float _camBaseFOV;
+
     private void Start()
     {
         _jackVals = new float[6];
@@ -56,6 +60,8 @@ public class AnalogInputManager : MonoBehaviour
         _transformedVals[POST_JACK] = new float[_postProcessOffsets.Length];
         _transformedVals[CAMERA_JACK] = new float[1];
         _transformedVals[SELECT_JACK] = new float[1];
+
+        _camBaseFOV = _gameCam.fieldOfView;
     }
 
     public void SetJackVal(int jackInd, float val)
@@ -153,10 +159,10 @@ public class AnalogInputManager : MonoBehaviour
         return Mathf.Clamp(selectVal, 0, 1);
     }
 
-    public void SetCameraScaleOffsets(Camera camera)
+    public void SetCameraScaleOffsets()
     {
         float val = TransformVal(_jackVals[CAMERA_JACK], _cameraScaleOffset, 1);
-        camera.fieldOfView = val;
+        _gameCam.fieldOfView = _camBaseFOV + val;
     }
 
     public void SetVertexOffsets(ComputeShader shader)

@@ -113,7 +113,7 @@ public class RasterizerController : MonoBehaviour
 
     public void BeginFrame(Camera camera, Color clearColor)
     {
-        _inputManager.SetCameraScaleOffsets(camera);
+        _inputManager.SetCameraScaleOffsets();
         _viewMatrix = camera.worldToCameraMatrix;
         _projectionMatrix = camera.projectionMatrix;
 

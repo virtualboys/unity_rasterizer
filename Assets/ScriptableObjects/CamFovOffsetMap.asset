@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Description: CamFOV
   PropName: 
-  Center: 1
-  Amplitude: 100
+  Center: 0
+  Amplitude: 30
