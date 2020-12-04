@@ -12,6 +12,7 @@ ProfileBuildNoBod/
 sysinfo.txt
 blender.crash.txt
 Assets/StreamingAssets/*
+Packages/*
 .vs
 */*.sln
 */*.app
