@@ -583,7 +583,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 90427772fa4442c4283ed85fbfe256b9, type: 2}
   - {fileID: 11400000, guid: cbcca876ca3fc7541b4dab731f5e19a5, type: 2}
   - {fileID: 11400000, guid: fe6c61021e79bc3479899c31f532bdc6, type: 2}
-  _rastScaleOffset: {fileID: 11400000, guid: fdd0efce67a5682459036742e99c64f9, type: 2}
+  _cameraScaleOffset: {fileID: 11400000, guid: fdd0efce67a5682459036742e99c64f9, type: 2}
   _selectOffset: {fileID: 11400000, guid: 4cb878f2548de6044a335fa002064fde, type: 2}
 --- !u!4 &571525656
 Transform:
@@ -1108,47 +1108,47 @@ MonoBehaviour:
   _inputManager: {fileID: 571525655}
   _jackOscillationPeriods:
   - InputDescription:
-      Name: 
-      CurrentParameter: 
+      Name: Vertex
+      CurrentParameter: normal explode
       CenterMode: 0
-    Oscillate: 0
-    Value: 0
-    Period: 6
+    Oscillate: 1
+    Value: -759.5354
+    Period: 14
   - InputDescription:
-      Name: 
-      CurrentParameter: 
+      Name: Rasterizer
+      CurrentParameter: Rast 2
       CenterMode: 0
-    Oscillate: 0
-    Value: 0
-    Period: 10
+    Oscillate: 1
+    Value: 914.9117
+    Period: 15
   - InputDescription:
-      Name: 
-      CurrentParameter: 
+      Name: Fragment
+      CurrentParameter: waves?
       CenterMode: 0
     Oscillate: 0
     Value: 0
     Period: 20
   - InputDescription:
-      Name: 
-      CurrentParameter: 
-      CenterMode: 0
-    Oscillate: 0
-    Value: 0
-    Period: 15
+      Name: Post Processing
+      CurrentParameter: Saturation
+      CenterMode: 3
+    Oscillate: 1
+    Value: 871.6418
+    Period: 30
   - InputDescription:
-      Name: 
-      CurrentParameter: 
+      Name: Rasterizer Scale
+      CurrentParameter: Rast Scale
       CenterMode: 0
     Oscillate: 0
     Value: 0
     Period: 30
   - InputDescription:
-      Name: 
-      CurrentParameter: 
-      CenterMode: 0
-    Oscillate: 0
-    Value: -5134
-    Period: 5
+      Name: Select
+      CurrentParameter: Select
+      CenterMode: 1
+    Oscillate: 1
+    Value: 914.9117
+    Period: 15
 --- !u!4 &1546748498
 Transform:
   m_ObjectHideFlags: 0

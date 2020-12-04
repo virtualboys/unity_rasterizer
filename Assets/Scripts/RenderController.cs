@@ -138,7 +138,7 @@ public class RenderController : MonoBehaviour
         _rasterizer.BeginFrame(_gameCamera, _clearColor);
         foreach(var mesh in _meshes)
         {
-            if(BoxInFrustum(mesh.BoundingBox))
+            //if(BoxInFrustum(mesh.BoundingBox))
             {
                 _rasterizer.DrawModel(mesh);
             }

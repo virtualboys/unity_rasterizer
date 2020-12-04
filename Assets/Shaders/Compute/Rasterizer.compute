@@ -37,7 +37,6 @@ uint TileSize;
 
 float RastOffset1;
 float RastOffset2;
-float RastOffset3;
 
 float4x4 ViewportMat;
 
@@ -115,10 +114,17 @@ void CSMain(uint3 id : SV_DispatchThreadID)
 
 				ZBuffer[pixInd] = frag_depth;
 
-				int2 offsetPixInd = pix + int2(Width * RastOffset1, Height * RastOffset1);
-				int offsetInd = int((offsetPixInd.x + offsetPixInd.y * Width)*RastOffset3) % (Width * Height);
-				ZBuffer[offsetInd] = .5f * frag_depth;
+				float2 uv = interpolateBary2(uvs[0], uvs[1], uvs[2], bc_clip);
+				UVsOut[pixInd] = uv;
 
+				float3 n = interpolateBary3(ns[0], ns[1], ns[2], bc_clip);
+				NormalsOut[pixInd] = n;
+
+				int2 offsetPixInd = (pix + int2(Width * RastOffset1, Height * RastOffset1));/// * RastOffset1;
+				int offsetInd = int((offsetPixInd.x + offsetPixInd.y * Width)) % (Width * Height);
+				ZBuffer[offsetInd] = .5f * frag_depth;
+				//NormalsOut[offsetInd] = float3(frag_depth, uv.y, n.z);
+				//UVsOut[offsetInd] = -n.xy;
 				//int2 offsetPixInd = int2(pix * float2(RastOffset, RastOffset));
 				//int offsetInd = int((offsetPixInd.x + offsetPixInd.y*Width));// % (Width * Height);
 				//ZBuffer[(int)(offsetInd*RastOffset)] = 112.5f * frag_depth;
@@ -131,11 +137,7 @@ void CSMain(uint3 id : SV_DispatchThreadID)
 				// screen[otherInd+1] = (.5f + .5f * bc_screen.y) * 255;
 				// screen[otherInd+2] = (.5f + .5f * bc_screen.z) * 255;
 
-				float3 n = interpolateBary3(ns[0], ns[1], ns[2], bc_clip);
-				NormalsOut[pixInd] = n;
 
-				float2 uv = interpolateBary2(uvs[0], uvs[1], uvs[2], bc_clip);
-				UVsOut[pixInd] = uv;
 
 			}
 		}
