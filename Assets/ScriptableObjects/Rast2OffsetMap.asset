@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Description: Rast 2
   PropName: RastOffset2
-  Center: 0
-  Amplitude: 1
+  Center: 3
+  Amplitude: 0.5

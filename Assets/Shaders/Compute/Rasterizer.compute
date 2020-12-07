@@ -120,9 +120,15 @@ void CSMain(uint3 id : SV_DispatchThreadID)
 				float3 n = interpolateBary3(ns[0], ns[1], ns[2], bc_clip);
 				NormalsOut[pixInd] = n;
 
-				int2 offsetPixInd = (pix + int2(Width * RastOffset1, Height * RastOffset1));/// * RastOffset1;
+				int mult = pix.x % 10;
+				int2 offsetPixInd = (int2(pix.x/(.2*mult*RastOffset1), pix.y/(.2*mult*RastOffset1)) + int2(Width * RastOffset1, Height * RastOffset1)) * RastOffset1;
 				int offsetInd = int((offsetPixInd.x + offsetPixInd.y * Width)) % (Width * Height);
 				ZBuffer[offsetInd] = .5f * frag_depth;
+
+				int2 offsetPixInd2 = (pix + int2(Width * RastOffset2, Height * RastOffset2)) * sin(RastOffset2*RastOffset2);
+				int offsetInd2 = int((offsetPixInd2.x + offsetPixInd2.y * Width)) % (Width * Height);
+				ZBuffer[offsetInd2] = .5f * frag_depth;
+
 				//NormalsOut[offsetInd] = float3(frag_depth, uv.y, n.z);
 				//UVsOut[offsetInd] = -n.xy;
 				//int2 offsetPixInd = int2(pix * float2(RastOffset, RastOffset));

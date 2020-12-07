@@ -2,6 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// randomize offset map order
+// patterns with oddity?
+// rim lighting
+
 public class RasterizerController : MonoBehaviour
 {
     private const string KERNEL_NAME = "CSMain";

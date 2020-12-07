@@ -21,6 +21,6 @@ void CSMain(uint3 id : SV_DispatchThreadID)
 	float4 oldColor = Screen[pix];
 	float4 newColor = oldColor * (1 - ClearColor.a) + ClearColor * ClearColor.a;
 	Screen[uint2(x, y)] = float4(newColor.rgb, 1.0f);
-	Normals[i] = float3(0, 0, 0);
+	//Normals[i] = float3(0, 0, 0);
 	ZBuffer[i] = 1.#INF;
 }
