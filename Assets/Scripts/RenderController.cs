@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using KinectDemo;
 using UnityEngine;
 
 [RequireComponent(typeof(Camera))]
@@ -54,8 +53,6 @@ public class RenderController : MonoBehaviour
         _screenMesh.material.mainTexture = _rasterizer.ScreenTex;
         _meshes = new List<MeshManager>();
         _frustumPlanes = new Plane[6];
-
-        Program.Main();
     }
 
     public void MarkForRender(MeshManager mesh)

@@ -47,12 +47,14 @@ public class AnalogInputManager : MonoBehaviour
 
     private float[] _jackVals;
     private float[][] _transformedVals;
+    private int[] _debugInds;
 
     private float _camBaseFOV;
 
     private void Start()
     {
         _jackVals = new float[6];
+        _debugInds = new int[6];
         _transformedVals = new float[6][];
         _transformedVals[VERT_JACK] = new float[_vertexOffsets.Length];
         _transformedVals[RAST_JACK] = new float[_rasterizerOffsets.Length];
@@ -64,9 +66,10 @@ public class AnalogInputManager : MonoBehaviour
         _camBaseFOV = _gameCam.fieldOfView;
     }
 
-    public void SetJackVal(int jackInd, float val)
+    public void SetJackVal(int jackInd, float val, int debugInd = -1)
     {
         _jackVals[jackInd] = val;
+        _debugInds[jackInd] = debugInd;
     }
 
     public InputDescription GetCurrentDescription(int jackInd)
@@ -92,7 +95,7 @@ public class AnalogInputManager : MonoBehaviour
                 maps = _postProcessOffsets;
                 break;
             case CAMERA_JACK:
-                name = "Rasterizer Scale";
+                name = "Camera";
                 maps = new ShaderOffsetMap[] { _cameraScaleOffset };
                 break;
             case SELECT_JACK:
@@ -105,9 +108,25 @@ public class AnalogInputManager : MonoBehaviour
                 break;
         }
 
-        int offsetInd = (int)(GetSelectVal() * (maps.Length - 1) + (.5f / maps.Length));
-        Debug.Log("Select val: " + GetSelectVal() + " offsetInd: " + offsetInd + " maps len: " + maps.Length + " jack ind: " + jackInd);
-        return new InputDescription(name, maps[offsetInd].Description, maps[offsetInd].Center);
+        if(_debugInds[jackInd] == -1)
+        {
+            int offsetInd = (int)(GetSelectVal() * (maps.Length - 1) + (.5f / maps.Length));
+            return new InputDescription(name, maps[offsetInd].Description, maps[offsetInd].Center);
+        }
+        else
+        {
+            if(_debugInds[jackInd] < maps.Length)
+            {
+                return new InputDescription(name, maps[_debugInds[jackInd]].Description, maps[_debugInds[jackInd]].Center);
+            }
+            else
+            {
+                Debug.LogError("Debug ind out of range");
+                int offsetInd = (int)(GetSelectVal() * (maps.Length - 1) + (.5f / maps.Length));
+                return new InputDescription(name, maps[offsetInd].Description, maps[offsetInd].Center);
+            }
+        }
+
     }
 
     private float TransformVal(float val, ShaderOffsetMap map, float scale)
@@ -131,25 +150,36 @@ public class AnalogInputManager : MonoBehaviour
 
     private void SetScaledOffsets(int jackNum, ComputeShader shader, ShaderOffsetMap[] offsetMaps)
     {
-        float select = GetSelectVal();
-        float tRange = 1.0f / (offsetMaps.Length - 1);
-        int ind1 = (int)(select / tRange);
-        for(int i = 0; i < offsetMaps.Length; i++)
+        if(_debugInds[jackNum] == -1)
         {
-            float t = 0;
-            if (i == ind1)
+            float select = GetSelectVal();
+            float tRange = 1.0f / (offsetMaps.Length - 1);
+            int ind1 = (int)(select / tRange);
+            for(int i = 0; i < offsetMaps.Length; i++)
             {
-                t = 1.0f - (select - (tRange * ind1)) / tRange;
-            }
-            else if (i == ind1 + 1)
-            {
-                t = (select - (tRange * ind1)) / tRange;
-            }
+                float t = 0;
+                if (i == ind1)
+                {
+                    t = 1.0f - (select - (tRange * ind1)) / tRange;
+                }
+                else if (i == ind1 + 1)
+                {
+                    t = (select - (tRange * ind1)) / tRange;
+                }
 
-            float val = TransformVal(_jackVals[jackNum], offsetMaps[i], t);
-            shader.SetFloat(offsetMaps[i].PropName, val);
+                float val = TransformVal(_jackVals[jackNum], offsetMaps[i], t);
+                shader.SetFloat(offsetMaps[i].PropName, val);
 
-            _transformedVals[jackNum][i] = val;
+                _transformedVals[jackNum][i] = val;
+            }
+        }
+        else
+        {
+            int offsetMapInd = _debugInds[jackNum];
+            float val = TransformVal(_jackVals[jackNum], offsetMaps[offsetMapInd], 1);
+            shader.SetFloat(offsetMaps[offsetMapInd].PropName, val);
+
+            _transformedVals[jackNum][offsetMapInd] = val;
         }
     }
 
