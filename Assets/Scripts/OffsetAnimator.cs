@@ -17,6 +17,8 @@ public class OffsetAnimation
     public bool IsInDebugMode;
     public int DebugInputInd;
 
+    public OffsetOverride OffsetOverride;
+
     public void Update()
     {
         if(Oscillate)
@@ -42,6 +44,11 @@ public class OffsetAnimator : MonoBehaviour
         {
             var o = _jackOscillationPeriods[i];
             o.Update();
+
+            if(o.OffsetOverride != null)
+            {
+                o.Value = o.OffsetOverride.Offset;
+            }
 
             if (o.IsInDebugMode)
             {
