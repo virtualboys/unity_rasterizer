@@ -1159,8 +1159,9 @@ MonoBehaviour:
     Oscillate: 0
     Value: 0
     Period: 14
-    IsInDebugMode: 0
+    IsInDebugMode: 1
     DebugInputInd: 0
+    OffsetOverride: {fileID: 8500288125826098634}
   - InputDescription:
       Name: Rasterizer
       CurrentParameter: Rast 2
@@ -1170,6 +1171,7 @@ MonoBehaviour:
     Period: 15
     IsInDebugMode: 1
     DebugInputInd: 0
+    OffsetOverride: {fileID: 8500288125826098640}
   - InputDescription:
       Name: Fragment
       CurrentParameter: waves?
@@ -1177,17 +1179,19 @@ MonoBehaviour:
     Oscillate: 0
     Value: 0
     Period: 20
-    IsInDebugMode: 0
+    IsInDebugMode: 1
     DebugInputInd: 0
+    OffsetOverride: {fileID: 8500288125826098630}
   - InputDescription:
       Name: Post Processing
       CurrentParameter: Saturation
       CenterMode: 3
-    Oscillate: 1
+    Oscillate: 0
     Value: 871.6418
     Period: 30
-    IsInDebugMode: 0
+    IsInDebugMode: 1
     DebugInputInd: 0
+    OffsetOverride: {fileID: 8500288125826098636}
   - InputDescription:
       Name: Camera
       CurrentParameter: Rast Scale
@@ -1197,6 +1201,7 @@ MonoBehaviour:
     Period: 30
     IsInDebugMode: 0
     DebugInputInd: 0
+    OffsetOverride: {fileID: 0}
   - InputDescription:
       Name: Select
       CurrentParameter: Select
@@ -1204,8 +1209,9 @@ MonoBehaviour:
     Oscillate: 0
     Value: 0
     Period: 15
-    IsInDebugMode: 0
+    IsInDebugMode: 1
     DebugInputInd: 0
+    OffsetOverride: {fileID: 0}
 --- !u!4 &1546748498
 Transform:
   m_ObjectHideFlags: 0
@@ -8500,6 +8506,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8500288125825874341}
+  - component: {fileID: 8500288125826098630}
   m_Layer: 0
   m_Name: joint_FootLT
   m_TagString: Untagged
@@ -8507,6 +8514,20 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &8500288125826098630
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8500288125826098629}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b3c5b3cc525da2446bcfd9ff16ff8954, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _axis: {x: 1, y: 0, z: 0}
+  _sensitivity: 10
 --- !u!1 &8500288125826098631
 GameObject:
   m_ObjectHideFlags: 0
@@ -8532,6 +8553,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8500288125825874345}
+  - component: {fileID: 8500288125826098634}
   m_Layer: 0
   m_Name: joint_HandLT
   m_TagString: Untagged
@@ -8539,6 +8561,20 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &8500288125826098634
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8500288125826098633}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b3c5b3cc525da2446bcfd9ff16ff8954, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _axis: {x: 0, y: 1, z: 0}
+  _sensitivity: 10
 --- !u!1 &8500288125826098635
 GameObject:
   m_ObjectHideFlags: 0
@@ -8548,6 +8584,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8500288125825874347}
+  - component: {fileID: 8500288125826098636}
   m_Layer: 0
   m_Name: joint_FootRT
   m_TagString: Untagged
@@ -8555,6 +8592,20 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &8500288125826098636
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8500288125826098635}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b3c5b3cc525da2446bcfd9ff16ff8954, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _axis: {x: -1, y: 0, z: 0}
+  _sensitivity: 10
 --- !u!1 &8500288125826098637
 GameObject:
   m_ObjectHideFlags: 0
@@ -8580,6 +8631,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8500288125825874351}
+  - component: {fileID: 8500288125826098640}
   m_Layer: 0
   m_Name: joint_HandRT
   m_TagString: Untagged
@@ -8587,6 +8639,20 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &8500288125826098640
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8500288125826098639}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b3c5b3cc525da2446bcfd9ff16ff8954, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _axis: {x: 0, y: 1, z: 0}
+  _sensitivity: 10
 --- !u!1 &8500288125826098641
 GameObject:
   m_ObjectHideFlags: 0
