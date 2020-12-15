@@ -8524,6 +8524,7 @@ GameObject:
   - component: {fileID: 8500288125825873955}
   - component: {fileID: 8500288125794548931}
   - component: {fileID: 8500288125826098244}
+  - component: {fileID: 8500288125826098245}
   m_Layer: 0
   m_Name: U_CharacterFront
   m_TagString: Untagged
@@ -8543,6 +8544,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d517f8fd7c324403bab70f160ef96bae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &8500288125826098245
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8500288125826098243}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 21d009565a343ca46888bb2b74c7ef3d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mirroredMovement: 0
+  verticalMovement: 0
+  smoothFactor: 5
+  offsetRelativeToSensor: 0
 --- !u!1 &8500288125826098257
 GameObject:
   m_ObjectHideFlags: 0
