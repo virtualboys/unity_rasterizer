@@ -1651,9 +1651,9 @@ MonoBehaviour:
       Name: Rasterizer
       CurrentParameter: Rast 2
       CenterMode: 0
-    Oscillate: 0
+    Oscillate: 1
     Value: 0
-    Period: 15
+    Period: 20
     IsInDebugMode: 0
     DebugInputInd: 0
     OffsetOverride: {fileID: 0}
@@ -1664,9 +1664,9 @@ MonoBehaviour:
     Oscillate: 0
     Value: 0
     Period: 20
-    IsInDebugMode: 1
+    IsInDebugMode: 0
     DebugInputInd: 0
-    OffsetOverride: {fileID: 0}
+    OffsetOverride: {fileID: 149829306}
   - InputDescription:
       Name: Post Processing
       CurrentParameter: Saturation
@@ -1674,7 +1674,7 @@ MonoBehaviour:
     Oscillate: 0
     Value: 871.6418
     Period: 30
-    IsInDebugMode: 1
+    IsInDebugMode: 0
     DebugInputInd: 0
     OffsetOverride: {fileID: 8500288125826098246}
   - InputDescription:
@@ -1691,9 +1691,9 @@ MonoBehaviour:
       Name: Select
       CurrentParameter: Select
       CenterMode: 1
-    Oscillate: 0
+    Oscillate: 1
     Value: 0
-    Period: 15
+    Period: 30
     IsInDebugMode: 0
     DebugInputInd: 0
     OffsetOverride: {fileID: 0}
@@ -6997,7 +6997,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8500288125826098243}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: -0.00018394, y: -27.1, z: 0}
   m_LocalScale: {x: 5.5097103, y: 5.5097103, z: 5.5097103}
   m_Children:
@@ -7005,7 +7005,7 @@ Transform:
   - {fileID: 8500288125825873977}
   m_Father: {fileID: 0}
   m_RootOrder: 14
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!4 &8500288125825873969
 Transform:
   m_ObjectHideFlags: 0
@@ -8618,10 +8618,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21d009565a343ca46888bb2b74c7ef3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mirroredMovement: 0
+  mirroredMovement: 1
   verticalMovement: 0
   smoothFactor: 5
-  offsetRelativeToSensor: 0
+  offsetRelativeToSensor: 1
 --- !u!114 &8500288125826098246
 MonoBehaviour:
   m_ObjectHideFlags: 0
