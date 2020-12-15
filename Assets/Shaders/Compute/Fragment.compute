@@ -52,7 +52,7 @@ void CSMain(uint3 id : SV_DispatchThreadID)
 		//n *= FragOffset1 * noise;
 
 
-		n = mul(n, AngleAxis3x3(FragOffset1 * noise, float3(1,0,0)));
+		//n = mul(n, AngleAxis3x3(FragOffset1 * noise, float3(1,0,0)));
 
 		float2 uv = UVs[i];
 
@@ -73,6 +73,12 @@ void CSMain(uint3 id : SV_DispatchThreadID)
 		// either of these look good but not together
 		//col.b += tan(FragOffset2 * (100*n.y));
 		col.g += sin(FragOffset2 * (100*n.y));
+
+		col.rgb = float3(1, 1, 1) * val;
+		col.rgb = n;
+
+		col.b *= 1 + FragOffset1 * sin(val);
+		col.r *= 1 + FragOffset1 * dot(col, n);
 
 		Screen[uint2(x, y)] = col;
 	}
