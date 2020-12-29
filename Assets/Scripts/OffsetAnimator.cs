@@ -6,6 +6,8 @@ using static ShaderOffsetMap;
 [Serializable]
 public class OffsetAnimation
 {
+    [Space(20)]
+    [Header("Offset Animation Configuration")]
     public InputDescription InputDescription;
 
     public bool Oscillate;
@@ -16,6 +18,7 @@ public class OffsetAnimation
     [Header("Debug")]
     public bool IsInDebugMode;
     public int DebugInputInd;
+    public bool LogValue;
 
     public OffsetOverride OffsetOverride;
 
@@ -58,7 +61,13 @@ public class OffsetAnimator : MonoBehaviour
             {
                 _inputManager.SetJackVal(i, o.Value);
             }
+
             o.InputDescription = _inputManager.GetCurrentDescription(i);
+
+            if (o.LogValue)
+            {
+                Debug.Log(o.InputDescription.CurrentParameter + ": " + o.Value);
+            }
         }
     }
 }
