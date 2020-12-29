@@ -247,13 +247,23 @@ public class AvatarController : MonoBehaviour
 	// Only pulls positional, not rotational.
 	protected void MoveAvatar(uint UserID)
 	{
+        Debug.Log("Moving avatar");
 		if(bodyRoot == null || kinectManager == null)
+        {
+            Debug.Log("Body root null");
 			return;
+
+        }
 		if(!kinectManager.IsJointTracked(UserID, (int)KinectWrapper.NuiSkeletonPositionIndex.HipCenter))
+        {
+            Debug.Log("Joint not tracked");
 			return;
+
+        }
 		
         // Get the position of the body and store it.
 		Vector3 trans = kinectManager.GetUserPosition(UserID);
+        Debug.Log("TRANS: " + trans);
 		
 		// If this is the first time we're moving the avatar, set the offset. Otherwise ignore it.
 		if (!offsetCalibrated)
@@ -275,9 +285,12 @@ public class AvatarController : MonoBehaviour
 				if(offsetNode != null)
 				{
 					offsetNode.transform.position = offsetPos;
+                    Debug.Log("Setting offset node " + offsetPos);
+                    Debug.Log("offset node: " + offsetNode.name);
 				}
 				else
 				{
+                    Debug.Log("Setting transform position");
 					transform.position = offsetPos;
 				}
 			}

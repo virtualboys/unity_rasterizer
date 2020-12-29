@@ -12,7 +12,6 @@ public class RotationOffsetOverride : OffsetOverride
         {
             float angle = Vector3.Angle(transform.forward, _forward);
             float val = -1024 * ((angle - 90) / 90.0f);
-            Debug.Log(val);
             return val;
         }
     }

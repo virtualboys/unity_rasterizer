@@ -38,6 +38,15 @@ public class VelocityOffsetOverride : OffsetOverride
         lastPos /= NUM_FRAMES;
 
         Vector3 d = transform.position - lastPos;
-        _offset = _sensitivity * 1024.0f * Vector3.Dot(d, _axis);
+        float v = 0;
+        if(_axis == Vector3.zero)
+        {
+            v = d.magnitude;
+        }
+        else
+        {
+            v = Vector3.Dot(d, _axis);
+        }
+        _offset = _sensitivity * 1024.0f * v;
     }
 }
