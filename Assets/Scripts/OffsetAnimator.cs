@@ -19,6 +19,8 @@ public class OffsetAnimation
     public bool IsInDebugMode;
     public int DebugInputInd;
     public bool LogValue;
+    public OSC OSCSender;
+    public float OSCMaxValue = 1;
 
     public OffsetOverride OffsetOverride;
 
@@ -63,6 +65,15 @@ public class OffsetAnimator : MonoBehaviour
             }
 
             o.InputDescription = _inputManager.GetCurrentDescription(i);
+
+            if(o.OSCSender != null)
+            {
+                OscMessage message = new OscMessage();
+                message.address = o.InputDescription.CurrentParameter;
+                float value = o.OSCMaxValue * (.5f + o.Value / 2048);
+                message.values.Add(value);
+                o.OSCSender.Send(message);
+            }
 
             if (o.LogValue)
             {

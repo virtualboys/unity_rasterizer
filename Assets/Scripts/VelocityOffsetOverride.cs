@@ -23,8 +23,9 @@ public class VelocityOffsetOverride : OffsetOverride
         }
     }
     
-    void Update()
+    new void Update()
     {
+        base.Update();
         Vector3 lastPos = Vector3.zero;
         for (int i = NUM_FRAMES - 1; i > 0; i--)
         {

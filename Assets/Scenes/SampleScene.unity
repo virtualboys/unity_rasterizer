@@ -345,6 +345,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5877a1b4d692794b900bd2d8aa3b046, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _osc: {fileID: 0}
+  _oscName: 
   _forward: {x: 0, y: 1, z: 0}
 --- !u!1 &263446629
 GameObject:
@@ -1801,6 +1803,36 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d3b47e30f9269a44c856e6bd61b292e6, type: 3}
+--- !u!1 &1536824679
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1536824680}
+  m_Layer: 0
+  m_Name: ElbowRtTarget
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1536824680
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1536824679}
+  m_LocalRotation: {x: 0, y: 0, z: 1, w: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 8500288125825874311}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 180}
 --- !u!1 &1546748496
 GameObject:
   m_ObjectHideFlags: 0
@@ -1841,17 +1873,23 @@ MonoBehaviour:
     Period: 14
     IsInDebugMode: 0
     DebugInputInd: 0
-    OffsetOverride: {fileID: 8500288125826098638}
+    LogValue: 0
+    OSCSender: {fileID: 0}
+    OSCMaxValue: 1
+    OffsetOverride: {fileID: 8500288125826098632}
   - InputDescription:
       Name: Rasterizer
       CurrentParameter: Rast 2
       CenterMode: 0
-    Oscillate: 1
+    Oscillate: 0
     Value: 0
     Period: 20
     IsInDebugMode: 0
     DebugInputInd: 0
-    OffsetOverride: {fileID: 0}
+    LogValue: 0
+    OSCSender: {fileID: 0}
+    OSCMaxValue: 1
+    OffsetOverride: {fileID: 8500288125826098640}
   - InputDescription:
       Name: Fragment
       CurrentParameter: waves?
@@ -1861,6 +1899,9 @@ MonoBehaviour:
     Period: 20
     IsInDebugMode: 0
     DebugInputInd: 0
+    LogValue: 0
+    OSCSender: {fileID: 0}
+    OSCMaxValue: 1
     OffsetOverride: {fileID: 149829306}
   - InputDescription:
       Name: Post Processing
@@ -1871,6 +1912,9 @@ MonoBehaviour:
     Period: 30
     IsInDebugMode: 0
     DebugInputInd: 0
+    LogValue: 0
+    OSCSender: {fileID: 0}
+    OSCMaxValue: 1
     OffsetOverride: {fileID: 8500288125826098246}
   - InputDescription:
       Name: Camera
@@ -1881,16 +1925,22 @@ MonoBehaviour:
     Period: 30
     IsInDebugMode: 0
     DebugInputInd: 0
+    LogValue: 0
+    OSCSender: {fileID: 0}
+    OSCMaxValue: 1
     OffsetOverride: {fileID: 0}
   - InputDescription:
       Name: Select
       CurrentParameter: Select
       CenterMode: 1
     Oscillate: 1
-    Value: 0
-    Period: 30
+    Value: 1024
+    Period: 40
     IsInDebugMode: 0
     DebugInputInd: 0
+    LogValue: 0
+    OSCSender: {fileID: 263446630}
+    OSCMaxValue: 1
     OffsetOverride: {fileID: 0}
 --- !u!4 &1546748498
 Transform:
@@ -7237,7 +7287,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8500288125826098235}
   m_LocalRotation: {x: -0.016957024, y: -0.00018829988, z: 0.014530214, w: 0.9997506}
-  m_LocalPosition: {x: 3.9968027e-17, y: 0.093531236, z: 0}
+  m_LocalPosition: {x: 0, y: 0.093531236, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 8500288125825874305}
@@ -7433,6 +7483,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 8500288125825874351}
+  - {fileID: 1536824680}
   m_Father: {fileID: 8500288125825873945}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -8547,6 +8598,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8500288125825874425}
+  - component: {fileID: 8500288125826098202}
   m_Layer: 0
   m_Name: joint_Pelvis
   m_TagString: Untagged
@@ -8554,6 +8606,21 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &8500288125826098202
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8500288125826098201}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5877a1b4d692794b900bd2d8aa3b046, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _osc: {fileID: 263446630}
+  _oscName: bodyrot
+  _forward: {x: 1, y: 0, z: 0}
 --- !u!1 &8500288125826098203
 GameObject:
   m_ObjectHideFlags: 0
@@ -8918,6 +8985,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6731dd7745e5f8245bacd1a81d4e2cac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _osc: {fileID: 263446630}
+  _oscName: hands
   _obj1: {fileID: 8500288125825874345}
   _obj2: {fileID: 8500288125825874351}
   _refDistance: 4
@@ -9027,6 +9096,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8500288125825874305}
+  - component: {fileID: 8500288125826098594}
   m_Layer: 0
   m_Name: joint_ElbowLT
   m_TagString: Untagged
@@ -9034,6 +9104,25 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &8500288125826098594
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8500288125826098593}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 562e38170facf4aac852d18fa655c131, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _osc: {fileID: 263446630}
+  _oscName: arms
+  _bone1: {fileID: 8500288125825874305}
+  _bone2: {fileID: 1536824680}
+  _axis: 1
+  _rampStart: 30
+  _clamp: 0
 --- !u!1 &8500288125826098595
 GameObject:
   m_ObjectHideFlags: 0
@@ -9316,7 +9405,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8500288125825874341}
-  - component: {fileID: 8500288125826098630}
   - component: {fileID: 8500288125826098632}
   m_Layer: 0
   m_Name: joint_FootLT
@@ -9325,20 +9413,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &8500288125826098630
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8500288125826098629}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b3c5b3cc525da2446bcfd9ff16ff8954, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _axis: {x: 1, y: 0, z: 0}
-  _sensitivity: 10
 --- !u!1 &8500288125826098631
 GameObject:
   m_ObjectHideFlags: 0
@@ -9367,8 +9441,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3c5b3cc525da2446bcfd9ff16ff8954, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _axis: {x: 0, y: 0, z: 0}
-  _sensitivity: 1000
+  _osc: {fileID: 263446630}
+  _oscName: lftfootspd
+  _axis: {x: 1, y: 0, z: 0}
+  _sensitivity: 10
 --- !u!1 &8500288125826098633
 GameObject:
   m_ObjectHideFlags: 0
@@ -9398,6 +9474,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3c5b3cc525da2446bcfd9ff16ff8954, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _osc: {fileID: 263446630}
+  _oscName: lfthandspd
   _axis: {x: 0, y: 1, z: 0}
   _sensitivity: 10
 --- !u!1 &8500288125826098635
@@ -9429,6 +9507,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3c5b3cc525da2446bcfd9ff16ff8954, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _osc: {fileID: 263446630}
+  _oscName: rtfootspd
   _axis: {x: -1, y: 0, z: 0}
   _sensitivity: 10
 --- !u!1 &8500288125826098637
@@ -9460,6 +9540,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3c5b3cc525da2446bcfd9ff16ff8954, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _osc: {fileID: 0}
+  _oscName: 
   _axis: {x: 0, y: 0, z: 0}
   _sensitivity: 1
 --- !u!1 &8500288125826098639
@@ -9491,6 +9573,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3c5b3cc525da2446bcfd9ff16ff8954, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _osc: {fileID: 263446630}
+  _oscName: rthandspd
   _axis: {x: 0, y: 1, z: 0}
   _sensitivity: 10
 --- !u!1 &8500288125826098641

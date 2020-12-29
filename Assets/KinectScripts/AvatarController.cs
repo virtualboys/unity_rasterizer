@@ -263,7 +263,6 @@ public class AvatarController : MonoBehaviour
 		
         // Get the position of the body and store it.
 		Vector3 trans = kinectManager.GetUserPosition(UserID);
-        Debug.Log("TRANS: " + trans);
 		
 		// If this is the first time we're moving the avatar, set the offset. Otherwise ignore it.
 		if (!offsetCalibrated)
