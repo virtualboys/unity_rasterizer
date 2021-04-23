@@ -44,7 +44,7 @@ StructuredBuffer<float4> VertsIn;
 StructuredBuffer<float3> NormalsIn;
 StructuredBuffer<float2> UVsIn;
 StructuredBuffer<uint3> IndsIn;
-StructuredBuffer<PolyList> TilePolyLists;
+RWStructuredBuffer<PolyList> TilePolyLists;
 
 RWStructuredBuffer<float> ZBuffer;
 RWTexture2D<float4> Screen;
@@ -148,4 +148,6 @@ void CSMain(uint3 id : SV_DispatchThreadID)
 			}
 		}
 	}
+
+	TilePolyLists[tileInd].Count = 0;
 }

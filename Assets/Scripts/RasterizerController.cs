@@ -148,7 +148,7 @@ public class RasterizerController : MonoBehaviour
 
         _vertexShader.Dispatch(_vertexKernel, mesh.NumVerts / NUM_THREADS_PER_GROUP, 1, 1);
         
-        _tilePolyListsBuffer.SetData(_emptyPolyLists);
+        //_tilePolyListsBuffer.SetData(_emptyPolyLists);
         _tilerShader.SetInt("Width", WIDTH);
         _tilerShader.SetInt("Height", HEIGHT);
         _tilerShader.SetInt("TilesX", _numTilesX);
