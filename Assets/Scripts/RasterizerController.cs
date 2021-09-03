@@ -14,8 +14,8 @@ public class RasterizerController : MonoBehaviour
     private const int TILE_SIZE = 4;
     private const int NUM_THREADS_PER_GROUP = 32;
 
-    private const int WIDTH = 1600;
-    private const int HEIGHT = 1200;
+    private const int WIDTH = 800;
+    private const int HEIGHT = 600;
 
     private unsafe struct PolyList
     {
