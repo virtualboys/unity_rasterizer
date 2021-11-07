@@ -996,6 +996,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Fern_Plant_Preview_FREE_Model
       objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 7dbb6a9e94590ff49ae053ea3c085c8a,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7dbb6a9e94590ff49ae053ea3c085c8a, type: 3}
 --- !u!1 &776364932 stripped
