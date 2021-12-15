@@ -37,6 +37,7 @@ uint TileSize;
 
 float RastOffset1;
 float RastOffset2;
+float RastOffset3;
 
 float4x4 ViewportMat;
 
@@ -111,7 +112,7 @@ void CSMain(uint3 id : SV_DispatchThreadID)
 
 				// THIS COULD BE ATOMIC
 				if (bc_screen.x < 0 || bc_screen.y < 0 || bc_screen.z < 0 || ZBuffer[pixInd] < frag_depth) continue;
-
+				pixInd *= RastOffset3;
 				ZBuffer[pixInd] = frag_depth;
 
 				float2 uv = interpolateBary2(uvs[0], uvs[1], uvs[2], bc_clip);

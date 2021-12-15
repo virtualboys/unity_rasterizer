@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 313b92810ede0204ca7224dd9c6f5197, type: 3}
-  m_Name: CamFovOffsetMap
+  m_Name: Rast3OffsetMap
   m_EditorClassIdentifier: 
-  Description: CamFOV
-  PropName: 
-  Center: 0
-  Amplitude: 50
+  Description: Rast 3
+  PropName: RastOffset3
+  Center: 3
+  Amplitude: 0.06

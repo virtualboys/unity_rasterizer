@@ -4,6 +4,13 @@ using UnityEngine;
 
 public abstract class MeshManager : MonoBehaviour
 {
+    public float WaveAmt { get { return _waveAmt; } }
+    [SerializeField] private float _waveAmt;
+    public float WaveFreq { get { return _waveFreq; } }
+    [SerializeField] private float _waveFreq;
+    public float TimeScale { get { return _timeScale; } }
+    [SerializeField] private float _timeScale;
+
     private Renderer _renderer;
 
     private int[] _inds;

@@ -357,6 +357,7 @@ MonoBehaviour:
   _rasterizerOffsets:
   - {fileID: 11400000, guid: f8cd2eb63e0612a46925056356a990f1, type: 2}
   - {fileID: 11400000, guid: 3a921ff3a35505b43b95db86edf65b9c, type: 2}
+  - {fileID: 11400000, guid: bcd1e43d7d8014b588551a5bfee04288, type: 2}
   _fragmentOffsets:
   - {fileID: 11400000, guid: 0d22cfc666a7018419c89f634214a953, type: 2}
   - {fileID: 11400000, guid: 643dc3edf624a424baad1304aa04ab96, type: 2}
@@ -692,65 +693,55 @@ MonoBehaviour:
       CenterMode: 0
     Oscillate: 0
     Random: 0
+    EaseType: 4
     Value: 0
     Period: 14
     SelectOverride: 0
     Select: 0
-    OSCSender: {fileID: 0}
-    OSCMaxValue: 1
-    OffsetOverride: {fileID: 0}
   - InputDescription:
       Name: Rasterizer
       CurrentParameter: Rast 2
       CenterMode: 0
-    Oscillate: 1
+    Oscillate: 0
     Random: 0
+    EaseType: 4
     Value: 0
     Period: 20
     SelectOverride: 0
     Select: 0
-    OSCSender: {fileID: 0}
-    OSCMaxValue: 1
-    OffsetOverride: {fileID: 0}
   - InputDescription:
       Name: Fragment
       CurrentParameter: waves?
       CenterMode: 0
-    Oscillate: 1
+    Oscillate: 0
     Random: 0
+    EaseType: 4
     Value: 0
     Period: 20
     SelectOverride: 0
     Select: 0
-    OSCSender: {fileID: 0}
-    OSCMaxValue: 1
-    OffsetOverride: {fileID: 0}
   - InputDescription:
       Name: Post Processing
       CurrentParameter: Saturation
       CenterMode: 3
-    Oscillate: 1
+    Oscillate: 0
     Random: 0
+    EaseType: 4
     Value: 871.6418
     Period: 30
     SelectOverride: 0
     Select: 0
-    OSCSender: {fileID: 0}
-    OSCMaxValue: 1
-    OffsetOverride: {fileID: 0}
   - InputDescription:
       Name: Camera
       CurrentParameter: Rast Scale
       CenterMode: 0
     Oscillate: 0
     Random: 0
+    EaseType: 4
     Value: 0
     Period: 30
     SelectOverride: 0
     Select: 0
-    OSCSender: {fileID: 0}
-    OSCMaxValue: 1
-    OffsetOverride: {fileID: 0}
   _selectOscillation:
     InputDescription:
       Name: Select
@@ -758,13 +749,11 @@ MonoBehaviour:
       CenterMode: 1
     Oscillate: 0
     Random: 0
+    EaseType: 4
     Value: 0
     Period: 0
     SelectOverride: 0
     Select: 0
-    OSCSender: {fileID: 0}
-    OSCMaxValue: 1
-    OffsetOverride: {fileID: 0}
 --- !u!4 &1546748498
 Transform:
   m_ObjectHideFlags: 0

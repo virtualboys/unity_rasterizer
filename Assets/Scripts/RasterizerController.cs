@@ -143,6 +143,11 @@ public class RasterizerController : MonoBehaviour
         _vertexShader.SetBuffer(_vertexKernel, "NormalsIn", mesh.NormalInBuffer);
         _vertexShader.SetBuffer(_vertexKernel, "VertsOut", mesh.VertexOutBuffer);
         _vertexShader.SetBuffer(_vertexKernel, "NormalsOut", mesh.NormalOutBuffer);
+        _vertexShader.SetVector("_Time", Shader.GetGlobalVector("_Time"));
+
+        _vertexShader.SetFloat("WaveDepth", mesh.WaveAmt);
+        _vertexShader.SetFloat("TimeScale", mesh.TimeScale);
+        _vertexShader.SetFloat("WaveFreq", mesh.WaveFreq);
 
         _inputManager.SetVertexOffsets(_vertexShader);
 

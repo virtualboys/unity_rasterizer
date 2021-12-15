@@ -12,12 +12,19 @@ RWStructuredBuffer<float3> NormalsOut;
 
 float VertOffset1;
 float VertOffset2;
+float WaveDepth;
+float TimeScale;
+float WaveFreq;
+
+float4 _Time;
 
 [numthreads(32,1,1)]
 void CSMain(uint3 id : SV_DispatchThreadID)
 {
 	float4 vert = float4(VertsIn[id.x], 1.0f);
 	float4 normal = float4(NormalsIn[id.x], 1.0f);
+
+	vert.z += WaveDepth * (sin(WaveFreq*(vert.x + TimeScale * _Time.x*.9)) + cos(WaveFreq*(vert.y + TimeScale * _Time.x)));
 
 	float3 n = mul(ModelMat, normal).xyz;
 	n = normalize(n);
@@ -27,6 +34,8 @@ void CSMain(uint3 id : SV_DispatchThreadID)
 	float3 roundedVert = (int3)vert.xyz;
 	VertOffset1 = clamp(VertOffset1, 0, 1);
 	vert.xyz = (vert.xyz * (1 - VertOffset1)) + (roundedVert * VertOffset1);
+
+
 	//vert.xyz = roundedVert;
 
 	VertsOut[id.x] = vert;
