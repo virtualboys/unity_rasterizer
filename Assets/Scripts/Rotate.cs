@@ -10,6 +10,7 @@ public class Rotate : MonoBehaviour
     void Update()
     {
         _axis.Normalize();
-        transform.rotation *= Quaternion.AngleAxis(360 * Time.deltaTime / _period, _axis);
+        transform.Rotate(_axis, 360 * Time.deltaTime / _period);
+        //transform.rotation *= Quaternion.AngleAxis(360 * Time.deltaTime / _period, _axis);
     }
 }

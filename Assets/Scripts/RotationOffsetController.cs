@@ -15,7 +15,10 @@ public class RotationOffsetController : MonoBehaviour
 
     private void Update()
     {
-        float val = _offsetController.Offset / 1024.0f;
-        transform.RotateAroundLocal(_axis, Time.deltaTime * val * _degreesPerSecond);
+        if(_offsetController != null)
+        {
+            float val = _offsetController.Offset / 1024.0f;
+            transform.RotateAroundLocal(_axis, Time.deltaTime * val * _degreesPerSecond);
+        }
     }
 }
