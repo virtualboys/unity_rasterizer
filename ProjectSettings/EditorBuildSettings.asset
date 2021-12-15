@@ -4,5 +4,23 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/BaseScene.unity
+    guid: 25219686b2d2b4c10aea821bdf51665a
+  - enabled: 1
+    path: Assets/Scenes/hand.unity
+    guid: 976db5d1374234da294872c7d56d211f
+  - enabled: 1
+    path: Assets/Scenes/lighthousescene.unity
+    guid: 458bcebd79ce0479cae66b53bfc63abf
+  - enabled: 1
+    path: Assets/Scenes/MothScene.unity
+    guid: 974f39c848ae648f9acd8dfe9383f09d
+  - enabled: 1
+    path: Assets/Scenes/MothSceneNull.unity
+    guid: 67e1ba6912ae3488db916777f062320d
+  - enabled: 1
+    path: Assets/Scenes/NautilusScene.unity
+    guid: 9fc0d4010bbf28b4594072e72b8655ab
   m_configObjects: {}

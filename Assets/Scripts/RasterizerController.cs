@@ -35,7 +35,7 @@ public class RasterizerController : MonoBehaviour
     [SerializeField] private ComputeShader _fragmentShader;
     [SerializeField] private ComputeShader _postProcessShader;
 
-    public Texture ScreenTex { get { return _screen; } }
+    public RenderTexture ScreenTex { get { return _screen; } }
     public int Width { get { return WIDTH; } }
     public int Height { get { return HEIGHT; } }
 

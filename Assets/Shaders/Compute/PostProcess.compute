@@ -41,6 +41,7 @@ RWTexture2D<float4> Screen;
 [numthreads(32, 1, 1)]
 void CSMain(uint3 id : SV_DispatchThreadID)
 {
+return;
 	uint i = id.x;
 	int x = i % Width;
 	int y = i / Width;

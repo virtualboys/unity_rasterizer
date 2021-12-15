@@ -35,6 +35,8 @@ namespace Klak.Syphon
         #region Internal objects and variables
 
         IntPtr _serverInstance;
+
+        public Texture ServerTexture { get { return _serverTexture; } }
         Texture _serverTexture;
         Material _blitMaterial;
         bool _hasCamera;
@@ -82,6 +84,7 @@ namespace Klak.Syphon
 
         void Update()
         {
+            //Debug.Log("Updated siphon");
             // Lazy initialization for the server plugin.
             if (_serverInstance == IntPtr.Zero)
             {
@@ -125,6 +128,7 @@ namespace Klak.Syphon
 
                 // Request texture copy.
                 Graphics.CopyTexture(_sourceTexture, _serverTexture);
+                //Debug.Log("Copying texture");
             }
 
             // Publish the new frame.
@@ -133,6 +137,7 @@ namespace Klak.Syphon
 
         void OnRenderImage(RenderTexture source, RenderTexture dest)
         {
+            //Debug.Log("rendered siphon");
             if (_serverTexture != null && _blitMaterial != null)
             {
                 // Capture the camera render.

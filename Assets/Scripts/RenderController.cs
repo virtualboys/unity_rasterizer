@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Klak.Syphon;
 using UnityEngine;
 
 [RequireComponent(typeof(Camera))]
@@ -26,6 +27,7 @@ public class RenderController : MonoBehaviour
     [SerializeField] private RasterizerController _rasterizer;
     [SerializeField] private Camera _gameCamera;
     [SerializeField] private MeshRenderer _screenMesh;
+    [SerializeField] private SyphonServer _syphon;
 
     [SerializeField] private Color _clearColor;
 
@@ -33,6 +35,7 @@ public class RenderController : MonoBehaviour
     private List<MeshManager> _meshes;
 
     private Plane[] _frustumPlanes;
+
     
     private void Awake()
     {
@@ -53,6 +56,11 @@ public class RenderController : MonoBehaviour
         _screenMesh.material.mainTexture = _rasterizer.ScreenTex;
         _meshes = new List<MeshManager>();
         _frustumPlanes = new Plane[6];
+
+        if(_syphon != null)
+        {
+            _syphon.sourceTexture = _rasterizer.ScreenTex;
+        }
     }
 
     public void MarkForRender(MeshManager mesh)
@@ -130,15 +138,23 @@ public class RenderController : MonoBehaviour
 
         return true;
     }
-    
+
+    private void LateUpdate()
+    {
+        
+
+        //_screenCamera.Render();
+    }
+
     private void OnPreRender()
     {
+
         ComputeFrustumPlanes();
 
         _rasterizer.BeginFrame(_gameCamera, _clearColor);
-        foreach(var mesh in _meshes)
+        foreach (var mesh in _meshes)
         {
-            if(BoxInFrustum(mesh.BoundingBox))
+            if (BoxInFrustum(mesh.BoundingBox))
             {
                 _rasterizer.DrawModel(mesh);
             }

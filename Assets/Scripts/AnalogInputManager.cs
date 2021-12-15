@@ -47,14 +47,14 @@ public class AnalogInputManager : MonoBehaviour
 
     private float[] _jackVals;
     private float[][] _transformedVals;
-    private int[] _debugInds;
+    private float[] _selectVals;
 
     private float _camBaseFOV;
 
     private void Start()
     {
         _jackVals = new float[6];
-        _debugInds = new int[6];
+        _selectVals = new float[6];
         _transformedVals = new float[6][];
         _transformedVals[VERT_JACK] = new float[_vertexOffsets.Length];
         _transformedVals[RAST_JACK] = new float[_rasterizerOffsets.Length];
@@ -66,10 +66,10 @@ public class AnalogInputManager : MonoBehaviour
         _camBaseFOV = _gameCam.fieldOfView;
     }
 
-    public void SetJackVal(int jackInd, float val, int debugInd = -1)
+    public void SetJackVal(int jackInd, float val, float select)
     {
         _jackVals[jackInd] = val;
-        _debugInds[jackInd] = debugInd;
+        _selectVals[jackInd] = select;
     }
 
     public InputDescription GetCurrentDescription(int jackInd)
@@ -108,24 +108,8 @@ public class AnalogInputManager : MonoBehaviour
                 break;
         }
 
-        if(_debugInds[jackInd] == -1)
-        {
-            int offsetInd = (int)(GetSelectVal() * (maps.Length - 1) + (.5f / maps.Length));
-            return new InputDescription(name, maps[offsetInd].Description, maps[offsetInd].Center);
-        }
-        else
-        {
-            if(_debugInds[jackInd] < maps.Length)
-            {
-                return new InputDescription(name, maps[_debugInds[jackInd]].Description, maps[_debugInds[jackInd]].Center);
-            }
-            else
-            {
-                Debug.LogError("Debug ind out of range");
-                int offsetInd = (int)(GetSelectVal() * (maps.Length - 1) + (.5f / maps.Length));
-                return new InputDescription(name, maps[offsetInd].Description, maps[offsetInd].Center);
-            }
-        }
+        int offsetInd = (int)(GetSelectVal(jackInd) * (maps.Length - 1) + (.5f / maps.Length));
+        return new InputDescription(name, maps[offsetInd].Description, maps[offsetInd].Center);
 
     }
 
@@ -150,9 +134,9 @@ public class AnalogInputManager : MonoBehaviour
 
     private void SetScaledOffsets(int jackNum, ComputeShader shader, ShaderOffsetMap[] offsetMaps)
     {
-        if(_debugInds[jackNum] == -1)
-        {
-            float select = GetSelectVal();
+        //if(_debugInds[jackNum] == -1)
+        //{
+            float select = GetSelectVal(jackNum);
             float tRange = 1.0f / (offsetMaps.Length - 1);
             int ind1 = (int)(select / tRange);
             for(int i = 0; i < offsetMaps.Length; i++)
@@ -172,20 +156,24 @@ public class AnalogInputManager : MonoBehaviour
 
                 _transformedVals[jackNum][i] = val;
             }
-        }
-        else
-        {
-            int offsetMapInd = _debugInds[jackNum];
-            float val = TransformVal(_jackVals[jackNum], offsetMaps[offsetMapInd], 1);
-            shader.SetFloat(offsetMaps[offsetMapInd].PropName, val);
+        //}
+        //else
+        //{
+        //    int offsetMapInd = _debugInds[jackNum];
+        //    float val = TransformVal(_jackVals[jackNum], offsetMaps[offsetMapInd], 1);
+        //    shader.SetFloat(offsetMaps[offsetMapInd].PropName, val);
 
-            _transformedVals[jackNum][offsetMapInd] = val;
-        }
+        //    _transformedVals[jackNum][offsetMapInd] = val;
+        //}
     }
 
-    private float GetSelectVal()
+    private float GetSelectVal(int jackInd)
     {
-        float selectVal = TransformVal(_jackVals[SELECT_JACK], _selectOffset, 1);
+        float selectVal = TransformVal(_selectVals[jackInd], _selectOffset, 1);
+        if(float.IsNaN(selectVal))
+        {
+            return 0;
+        }
         return Mathf.Clamp(selectVal, 0, 1);
     }
 

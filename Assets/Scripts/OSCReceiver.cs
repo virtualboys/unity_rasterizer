@@ -20,10 +20,10 @@ public class OSCReceiver : MonoBehaviour
 
     private void ReceiveAJacks(OscMessage msg)
     {
-        for(int i = 0; i < 6; i++)
-        {
-            _inputManager.SetJackVal(i, msg.GetFloat(i));
-        }
+        //for(int i = 0; i < 6; i++)
+        //{
+        //    _inputManager.SetJackVal(i, msg.GetFloat(i));
+        //}
     }
 }
 

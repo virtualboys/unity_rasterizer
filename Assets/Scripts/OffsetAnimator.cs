@@ -11,14 +11,15 @@ public class OffsetAnimation
     public InputDescription InputDescription;
 
     public bool Oscillate;
-    [Range(-8000, 8000)]
+    public bool Random;
+    [Range(-2000, 2000)]
     public float Value;
     public float Period;
 
-    [Header("Debug")]
-    public bool IsInDebugMode;
-    public int DebugInputInd;
-    public bool LogValue;
+    public bool SelectOverride;
+    [Range(-1024, 1024)]
+    public float Select;
+
     public OSC OSCSender;
     public float OSCMaxValue = 1;
 
@@ -42,43 +43,45 @@ public class OffsetAnimator : MonoBehaviour
     [SerializeField] private AnalogInputManager _inputManager;
 
     [SerializeField] private OffsetAnimation[] _jackOscillationPeriods;
+    [SerializeField] private OffsetAnimation _selectOscillation;
 
     private void Update()
     {
+        UpdateOscillation(_selectOscillation, 5);
         for(int i = 0; i < _jackOscillationPeriods.Length; i++)
         {
             var o = _jackOscillationPeriods[i];
-            o.Update();
+            UpdateOscillation(o, i);
+        }
+    }
 
-            if(o.OffsetOverride != null)
-            {
-                o.Value = o.OffsetOverride.Offset;
-            }
+    private void UpdateOscillation(OffsetAnimation o, int jackInd)
+    {
+        o.Update();
 
-            if (o.IsInDebugMode)
-            {
-                _inputManager.SetJackVal(i, o.Value, o.DebugInputInd);
-            }
-            else
-            {
-                _inputManager.SetJackVal(i, o.Value);
-            }
+        if (o.OffsetOverride != null)
+        {
+            o.Value = o.OffsetOverride.Offset;
+        }
 
-            o.InputDescription = _inputManager.GetCurrentDescription(i);
+        if (o.SelectOverride)
+        {
+            _inputManager.SetJackVal(jackInd, o.Value, o.Select);
+        }
+        else
+        {
+            _inputManager.SetJackVal(jackInd, o.Value, _selectOscillation.Value);
+        }
 
-            if(o.OSCSender != null)
-            {
-                OscMessage message = new OscMessage();
-                message.address = o.InputDescription.CurrentParameter;
-                float value = o.OSCMaxValue * (.5f + o.Value / 2048);
-                message.values.Add(value);
-                o.OSCSender.Send(message);
-            }
+        o.InputDescription = _inputManager.GetCurrentDescription(jackInd);
 
-            if (o.LogValue)
-            {
-                Debug.Log(o.InputDescription.CurrentParameter + ": " + o.Value);
-            }
+        if (o.OSCSender != null)
+        {
+            OscMessage message = new OscMessage();
+            message.address = o.InputDescription.CurrentParameter;
+            float value = o.OSCMaxValue * (.5f + o.Value / 2048);
+            message.values.Add(value);
+            o.OSCSender.Send(message);
         }
     }
 }

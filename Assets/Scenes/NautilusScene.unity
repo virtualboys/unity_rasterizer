@@ -481,7 +481,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &263446630
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -541,7 +541,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &342656434
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -743,7 +743,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &571525655
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1043,7 +1043,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!20 &800431632
 Camera:
   m_ObjectHideFlags: 0
@@ -1295,7 +1295,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &963194226
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1311,6 +1311,7 @@ MonoBehaviour:
   _rasterizer: {fileID: 342656434}
   _gameCamera: {fileID: 800431632}
   _screenMesh: {fileID: 1013292350}
+  _syphon: {fileID: 0}
   _clearColor: {r: 0, g: 0, b: 0, a: 0.6392157}
 --- !u!20 &963194227
 Camera:
@@ -1711,7 +1712,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!64 &1013292349
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -2043,7 +2044,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1546748497
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2062,7 +2063,7 @@ MonoBehaviour:
       Name: Vertex
       CurrentParameter: normal explode
       CenterMode: 0
-    Oscillate: 0
+    Oscillate: 1
     Value: 0
     Period: 14
     IsInDebugMode: 0
@@ -2075,7 +2076,7 @@ MonoBehaviour:
       Name: Rasterizer
       CurrentParameter: Rast 2
       CenterMode: 0
-    Oscillate: 0
+    Oscillate: 1
     Value: 0
     Period: 20
     IsInDebugMode: 0
@@ -2088,7 +2089,7 @@ MonoBehaviour:
       Name: Fragment
       CurrentParameter: waves?
       CenterMode: 0
-    Oscillate: 0
+    Oscillate: 1
     Value: 0
     Period: 20
     IsInDebugMode: 0
@@ -2101,7 +2102,7 @@ MonoBehaviour:
       Name: Post Processing
       CurrentParameter: Saturation
       CenterMode: 3
-    Oscillate: 0
+    Oscillate: 1
     Value: 871.6418
     Period: 30
     IsInDebugMode: 0
@@ -2114,7 +2115,7 @@ MonoBehaviour:
       Name: Camera
       CurrentParameter: Rast Scale
       CenterMode: 0
-    Oscillate: 0
+    Oscillate: 1
     Value: 0
     Period: 30
     IsInDebugMode: 0

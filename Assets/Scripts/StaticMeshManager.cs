@@ -14,6 +14,8 @@ public class StaticMeshManager : MeshManager
             return;
         }
 
+        mesh.mesh.SetTriangles(mesh.mesh.triangles, 0);
+
         InitBuffers(mesh.sharedMesh, rend);
     }
 }
