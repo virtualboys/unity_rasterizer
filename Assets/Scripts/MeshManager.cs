@@ -61,7 +61,14 @@ public abstract class MeshManager : MonoBehaviour
         _inds = mesh.triangles;
         _vertices = mesh.vertices;
         _normals = mesh.normals;
-        _uvs = mesh.uv;
+        if (mesh.uv.Length == 0)
+        {
+            _uvs = new Vector2[_vertices.Length];
+        }
+        else
+        {
+            _uvs = mesh.uv;
+        }
 
         _numFaces = _inds.Length / 3;
         
@@ -73,8 +80,11 @@ public abstract class MeshManager : MonoBehaviour
         _indexBuffer = new ComputeBuffer(_numFaces, sizeof(int) * 3);
         _indexBuffer.SetData(_inds);
 
-        _uvBuffer = new ComputeBuffer(_uvs.Length, sizeof(float) * 2);
-        _uvBuffer.SetData(_uvs);
+        if(_uvs != null)
+        {
+            _uvBuffer = new ComputeBuffer(_uvs.Length, sizeof(float) * 2);
+            _uvBuffer.SetData(_uvs);
+        }
 
         _vertexInBuffer = new ComputeBuffer(_vertices.Length, sizeof(float) * 3);
         _vertexInBuffer.SetData(_vertices);
@@ -99,7 +109,10 @@ public abstract class MeshManager : MonoBehaviour
     private void OnDestroy()
     {
         _indexBuffer.Dispose();
-        _uvBuffer.Dispose();
+        if(_uvs != null)
+        {
+            _uvBuffer.Dispose();
+        }
         _vertexInBuffer.Dispose();
         _normalInBuffer.Dispose();
         _vertexOutBuffer.Dispose();

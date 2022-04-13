@@ -23,4 +23,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/NautilusScene.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
+  - enabled: 1
+    path: Assets/Scenes/GlobeScene.unity
+    guid: e431375c374294b2ab7c2d0397be5a1b
+  - enabled: 1
+    path: Assets/Scenes/mushroomScene.unity
+    guid: 8543c6b2c69904938b6564c72e2597ed
   m_configObjects: {}
