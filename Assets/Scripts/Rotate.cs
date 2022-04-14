@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class Rotate : MonoBehaviour
 {
-    [SerializeField] private float _period;
-    [SerializeField] private Vector3 _axis;
+    [SerializeField] private float _period = 15;
+    [SerializeField] private Vector3 _axis = Vector3.forward;
 
     [SerializeField] private float _range = 360;
+    [SerializeField] private bool _randomStartRot;
 
     private Quaternion _startRot;
     private float _rotation;
@@ -24,6 +25,7 @@ public class Rotate : MonoBehaviour
     private void OnEnable()
     {
         _startRot = transform.rotation;
+        _rotation = (_randomStartRot) ? Random.Range(0, _range) : 0;
     }
 
     void Update()
@@ -53,7 +55,7 @@ public class Rotate : MonoBehaviour
             }
         }
 
-        transform.rotation = _startRot * Quaternion.AngleAxis(_rotation, _axis);
+        transform.rotation = Quaternion.AngleAxis(_rotation, _axis) * _startRot;
         //transform.Rotate(_axis, 360 * Time.deltaTime / _period);
         //transform.rotation *= Quaternion.AngleAxis(360 * Time.deltaTime / _period, _axis);
     }

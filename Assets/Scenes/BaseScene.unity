@@ -397,6 +397,7 @@ GameObject:
   m_Component:
   - component: {fileID: 800431633}
   - component: {fileID: 800431632}
+  - component: {fileID: 800431634}
   m_Layer: 0
   m_Name: GameCam
   m_TagString: Untagged
@@ -411,7 +412,7 @@ Camera:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 800431631}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
   m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
@@ -461,6 +462,22 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &800431634
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 800431631}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f34dd2ed7ca17ed42a22979969f5fc04, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _period: 15
+  _axis: {x: 0, y: 0, z: 1}
+  _range: 360
+  _randomStartRot: 0
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0
@@ -757,7 +774,7 @@ MonoBehaviour:
     Random: 0
     EaseType: 4
     Value: 0
-    Period: 0
+    Period: 40
     SelectOverride: 0
     Select: 0
 --- !u!4 &1546748498

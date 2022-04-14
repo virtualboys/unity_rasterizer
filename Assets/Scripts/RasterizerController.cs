@@ -14,8 +14,10 @@ public class RasterizerController : MonoBehaviour
     private const int TILE_SIZE = 4;
     private const int NUM_THREADS_PER_GROUP = 32;
 
-    private const int WIDTH = 800;
-    private const int HEIGHT = 600;
+    public const int WIDTH = 1060;
+    public const int HEIGHT = 600;
+
+    public static float Aspect { get { return ((float)HEIGHT) / WIDTH; } }
 
     private unsafe struct PolyList
     {

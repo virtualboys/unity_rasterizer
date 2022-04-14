@@ -52,6 +52,8 @@ public class RenderController : MonoBehaviour
     private void Start()
     {
         _screenCamera = GetComponent<Camera>();
+        _screenMesh.transform.localScale = new Vector3(1, RasterizerController.Aspect, 1);
+        _screenCamera.orthographicSize = RasterizerController.Aspect / 2.0f;
         _rasterizer.Init();
         _screenMesh.material.mainTexture = _rasterizer.ScreenTex;
         _meshes = new List<MeshManager>();
