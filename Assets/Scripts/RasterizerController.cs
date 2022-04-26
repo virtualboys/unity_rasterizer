@@ -14,8 +14,8 @@ public class RasterizerController : MonoBehaviour
     private const int TILE_SIZE = 4;
     private const int NUM_THREADS_PER_GROUP = 32;
 
-    public const int WIDTH = 1060;
-    public const int HEIGHT = 600;
+    public const int WIDTH = 704;
+    public const int HEIGHT = 400;
 
     public static float Aspect { get { return ((float)HEIGHT) / WIDTH; } }
 
